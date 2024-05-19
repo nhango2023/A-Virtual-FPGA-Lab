@@ -1,0 +1,231 @@
+body {
+  padding: 0;
+  max-width: 1000px;
+  margin: 0 auto;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: rgb(24, 240, 240)
+}
+
+.main {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+
+.title1 {
+  margin: 20px;
+  padding: 20px;
+  text-align: center;
+}
+
+#upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+
+#file-upload {
+  display: none;
+}
+
+#upload-btn {
+  padding: 30px 40px;
+  border: 5px solid #dddddd5f;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.title2 {
+  align-items: center;
+  margin: 20px;
+  padding: 20px;
+  width: 80px;
+  height: 50px;
+  text-align: center;
+}
+
+.HCN {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+
+}
+
+.input {
+  width: 400px;
+  height: 400px;
+  background-color: rgb(235, 237, 237);
+  margin: 10px;
+  position: relative;
+
+}
+
+.output {
+  width: 400px;
+  height: 400px;
+  background-color: rgb(235, 237, 237);
+  margin: 10px;
+  position: relative;
+}
+
+.text1 {
+  text-align: center;
+
+}
+
+.push-buttons {
+  width: 200px;
+  height: 80px;
+  background-color: rgb(140, 142, 143);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  right: 100px;
+  border: 5px solid #747171;
+}
+
+.button {
+  padding: 10px 20px;
+  background-color: #f0f0f0;
+  width: 50px;
+  height: 50px;
+}
+
+.button1 {
+  width: 50px;
+  height: 30px;
+  font-size: 20px;
+  background-color: rgb(29, 189, 29);
+}
+
+.active {
+  background-color: red;
+}
+
+.text2 {
+  text-align: center;
+  margin: 90px;
+  padding: 20px;
+  display: inline-block;
+  width: 190px;
+}
+
+.Dip-switches {
+  display: flex;
+  flex-wrap: wrap;
+  width: 253px;
+  height: 98px;
+  background-color: blue;
+  position: absolute;
+  right: 70px;
+  top: 260px;
+  align-items: center;
+  border: 5px solid #747171;
+}
+
+.switch {
+  position: relative;
+}
+
+.switch-input {
+  display: none;
+}
+
+.switch-label {
+  display: inline-block;
+  width: 30px;
+  height: 60px;
+  background-color: #ccc;
+  border-radius: 3px;
+  cursor: pointer;
+  position: relative;
+  border: 1px solid #000000;
+  margin: auto;
+  align-items: center;
+}
+
+.switch-input:checked+.switch-label {
+  background-color: red;
+}
+
+.switch-label::after {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border-radius: 2px;
+  background-color: white;
+  top: 0px;
+  left: 0px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.switch-input:checked+.switch-label::after {
+  transform: translateY(30px);
+}
+
+.button2 {
+  width: 31.5px;
+  height: 31.5px;
+  font-size: 15px;
+  background-color: blue;
+  border: 1px solid #000000;
+}
+
+.text3 {
+  text-align: center;
+}
+
+.Bar-Leds {
+  width: 320px;
+  height: 99px;
+  background-color: rgb(140, 142, 143);
+  position: absolute;
+  right: 35px;
+  flex-wrap: wrap;
+  align-items: center;
+  display: flex;
+  border: 5px solid #747171;
+
+}
+
+.led {
+  width: 30px;
+  height: 60px;
+  border-radius: 2px;
+  background-color: #ccc;
+  border: 1px solid #000000;
+}
+
+.button3 {
+  width: 31.5px;
+  height: 31.5px;
+  font-size: 15px;
+  background-color: #747171;
+  border: 1px solid #000000;
+}
+
+.text4 {
+  text-align: center;
+  margin: 90px;
+  padding: 20px;
+  display: inline-block;
+  width: 190px;
+}
+
+.segment {
+  width: 80px;
+  height: 100px;
+  border-radius: 2px;
+  background-color: #000000;
+  border: 5px solid #747171;
+  right: 150px;
+  top: 260px;
+  display: flex;
+  flex-wrap: wrap;
+  position: absolute;
+}
