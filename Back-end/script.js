@@ -4,15 +4,18 @@ const buttons = document.querySelectorAll(".button");
 // input from push button
 var button_input = [0, 0, 0, 0];
 
+
 // function keydown of push button
 document.addEventListener("keydown", function (event) {
     if (event.key === "1") { // Keycode for number 1
         button_input[0] = 1;
         buttons[0].classList.add("active");
+
     }
     else if (event.key === "2") { // Keycode for number 2
         button_input[1] = 1;
         buttons[1].classList.add("active");
+
     } else if (event.key === "3") { // Keycode for number 3
         button_input[2] = 1;
         buttons[2].classList.add("active");
@@ -70,6 +73,7 @@ fileInput.addEventListener('change', function (event) {
             const extractedWord = match[1];
             //assign name of module
             name_module = extractedWord;
+            rst_All_variable();
             console.log("Extracted characters:", extractedWord); // Output: "name of module"
         } else {
             name_module = "-------";
@@ -92,23 +96,34 @@ const ledOutput = document.querySelectorAll('.led')
 var switch_input = [];
 //--------------------------------------------------------------------------------------------//
 //global variable for BAI4A
-var pre_clk_BAI4A = 0;
+let pre_clk_BAI4A = 0;
+let Q = 0;
 
 //count global variable for BAI5A
-var value = 0;
-var pre_clk_BAI5A = 0;
+let value = 0;
+let pre_clk_BAI5A = 0;
 
 //2 global variables for BAI6A
-let arr_p_state = []; //luu p_state hien tai
-let arr_x = []
-let COUNT = 0;
-let temp_x; //luu x hien tai
 let p_state = 0
 let n_state = 0
 let pre_clk_BAI6A = 0;
+let w = 0
 
+function rst_All_variable() {
+    //global variable for BAI4A
+    pre_clk_BAI4A = 0;
+    Q = 0;
 
+    //count global variable for BAI5A
+    value = 0;
+    pre_clk_BAI5A = 0;
 
+    //2 global variables for BAI6A
+    p_state = 0
+    n_state = 0
+    pre_clk_BAI6A = 0;
+    w = 0
+}
 //-------------------------------------------------------------------------------------------//
 //object A
 var A = {
@@ -130,9 +145,8 @@ var A = {
     },
     BAI4A: function (rst, clk, D) {
         let LED = [0, 0, 0, 0, 0, 0, 0, 0];
-        let Q = 0;
-        let Q_bar = 0;
-        Q == 1 ? Q_bar = 0 : Q_bar = 1;
+        let Q_bar = 1;
+
         if (clk == 1 && pre_clk_BAI4A == 0) {
 
             if (rst == 0) {
@@ -148,8 +162,6 @@ var A = {
     },
     BAi5A: function (rst, clk) {
         let LED = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
-
         if (clk == 1 && pre_clk_BAI5A == 0) {
             if (rst == 0) {
                 value = 0
@@ -163,11 +175,6 @@ var A = {
         for (let i = 0; i < 4; i++) {
             LED[i] = parseInt(str_binary[i], 2);
         }
-        if(rst == 0 && clk == 0){
-            for (let i = 0; i < 4; i++) {
-                LED[i] = 0;
-            }
-        }
         return LED;
     },
     BAI6A: function (x, rst, clk) {
@@ -177,12 +184,8 @@ var A = {
         let C = 2;//[0, 1, 0];
         let D = 3;//[0, 1, 1];
         let E = 4;//[1, 0, 0];
-        w = 0;
-        COUNT ++;
-        arr_p_state[COUNT] = p_state;
-        arr_x[COUNT] = x;
-        let
-        if (x != arr_x[count-1] || p_state != arr_p_state[COUNT-1]) {
+
+        if (pre_clk_BAI6A === 0 && clk === 1) {
             n_state = A;
             switch (p_state) {
                 case A:
@@ -204,14 +207,18 @@ var A = {
                     n_state = A;
                     break;
             }
+            if (rst === 0) {
+                p_state = A;
+            } else {
+                p_state = n_state;
+            }
+            w = 0;
+            if (p_state === E) {
+                w = 1
+            }
         }
-    if (x != arr_x[count-1] || p_state != arr_p_state[COUNT-1]) p_state == E ? w = 1 : w = 0;
-        if (clk && pre_clk_BAI6A == 0) {
-            rst == 0 ? p_state = A : p_state = n_state;//reset state
-        }
-        temp_p_state = p_state;
+
         pre_clk_BAI6A = clk;
-        temp_x = x;
         LED[0] = w;
         return LED;
     },
@@ -280,7 +287,7 @@ var count = 1;
 // create a function to get and pass input, output 
 function verilog() {
 
-    count++;
+
     if (name_module != "") {
         // check switch on UI is checked or not
 
@@ -299,7 +306,8 @@ function verilog() {
         for (let i = 0; i < ledOutput.length; i++) {
             ledOutput[i].classList.toggle('active_led', C.LED[i] == 1);
         }
-        console.log(C.PB[1], C.PB[0], C.SW[0], C.LED[0])
+        // console.log("rst---", "clk-----", "value");
+        console.log(C.SW[0] + "-----" + C.PB[0] + "----" + C.PB[1] + "-----" + p_state + "------" + n_state + "-------" + C.LED[0]);
 
     }
 
@@ -308,4 +316,4 @@ function verilog() {
 
 
 // after 0.5s call function verilog
-setInterval(verilog, 5000)
+setInterval(verilog, 100)
