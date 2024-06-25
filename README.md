@@ -5,14 +5,14 @@ Giáo dục kỹ thuật thiết kế IC phụ thuộc nhiều vào các bài th
 
 <h3>Hình ảnh giao diện </h3>
 <div style="display: inline">
-  <img src="https://i.imgur.com/dZR4110.png" alt="Hình ảnh code editor và console" width="500" height="400">
+  <img src="https://i.imgur.com/Po8aj9S.png" alt="Hình ảnh code editor và console" width="500" height="400">
   <img src="https://i.imgur.com/4Ktl9TZ.png" alt="Hinh ảnh I/O" width="500" height="400"> 
 </div>
 
 <h3>Giao diện</h3>
 -Code editor
 <ul >
-  <img src="https://i.imgur.com/sUEhjB0.png" alt="Nút bấm" width="300" height="200">
+  <img src="https://i.imgur.com/r8r1wPN.png" alt="Nút bấm" width="300" height="200">
   </ul>
   -Console
 <ul >
@@ -45,8 +45,10 @@ Giáo dục kỹ thuật thiết kế IC phụ thuộc nhiều vào các bài th
   <li>2.Mở thư mục có tên Front-end GUI </li>
   <li>3.Click chuột phải lên tệp tên: index và chọn Open with </li>
   <li>4.Chọn một trình duyệt</li>
-  <li>5.Nhập thiết kế và kểt nối vào code editor (*vui lòng nhập theo thứ tự: tệp thiết kế trước và sau đó là tệp kết nối)</li>
-  <li>6.Bấm nút Run (*tệp thiết kế và tệp kết nối sẽ được kiểm tra cùng lúc)</li>
+  <li>5.Nhập thiết kế và kểt nối vào "Code editor" hoặc mở một file trên máy của bạn hoặc mở file có sẵn trong thư mục "File lab" trong project bằng cách nhập vào nút "Open"</li>
+  <li>**Vui lòng nhập theo thứ tự: tệp thiết kế trước và sau đó là tệp kết nối</li>
+  <li>**File được mở trên máy phải chứa cả tệp thiết kế và tệp kết nối theo thứ tự: tệp thiết kế trước và tệp kết nối sau </li>
+  <li>6.Bấm nút "Run" (**tệp thiết kế và tệp kết nối sẽ được kiểm tra cùng lúc)</li>
   <li>7.Kiểm tra thông báo (lỗi hoặc không lỗi) ở Console</li>
   <li>8.Nếu không có lỗi thì bắt đầu công tắc, nút bấm .</li>
   </ul>
