@@ -21,6 +21,34 @@ body {
   padding: 20px;
 }
 
+.button-container {
+  display: flex;
+  text-align: left;
+}
+
+#saveButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  margin-top: 10px;
+  margin-right: 2px;
+  cursor: pointer;
+  border: none;
+  background-color: #28a745;
+  color: white;
+  border-radius: 5px;
+}
+
+#openButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  margin-top: 10px;
+  cursor: pointer;
+  border: none;
+  background-color: #28a745;
+  color: white;
+  border-radius: 5px;
+}
+
 #code-container {
   width: 830px;
   height: 400px;
@@ -30,8 +58,8 @@ body {
 }
 
 
-textarea {
 
+textarea {
   height: 10000px;
   padding: 30px 5px 30px 5px;
   font-size: 16px;

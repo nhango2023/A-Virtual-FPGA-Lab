@@ -25,6 +25,60 @@ const textArea = document.getElementById("code");
 //Set variable for setInterval to computing I/O 
 var Io_computing;
 
+//save text from textarea
+document.getElementById('saveButton').addEventListener('click', function () {
+    // Get the text from the textarea
+    let textToSave = document.getElementById('code').value;
+
+    // Create a Blob with the text
+    let textBlob = new Blob([textToSave], { type: 'text/plain' });
+
+    // Create a link element
+    let downloadLink = document.createElement('a');
+
+    // Create a URL for the Blob and set it as the href attribute of the link
+    downloadLink.href = URL.createObjectURL(textBlob);
+
+    // Set the download attribute with a filename
+    downloadLink.download = 'verilog.txt';
+
+    // Append the link to the body (necessary for Firefox)
+    document.body.appendChild(downloadLink);
+
+    // Programmatically click the link to trigger the download
+    downloadLink.click();
+
+    // Remove the link from the document
+    document.body.removeChild(downloadLink);
+});
+
+//open a file 
+document.getElementById('openButton').addEventListener('click', function () {
+    // Programmatically click the hidden file input element
+    document.getElementById('fileInput').click();
+});
+
+document.getElementById('fileInput').addEventListener('change', function (event) {
+    // Get the selected file
+    let file = event.target.files[0];
+
+    // Create a FileReader to read the file
+    let reader = new FileReader();
+
+    // Define the onload event handler
+    reader.onload = function (e) {
+        // Get the file content
+        let fileContent = e.target.result;
+
+        // Display the file content in the textarea
+        document.getElementById('code').value = fileContent;
+    };
+
+    // Read the file as text
+    reader.readAsText(file);
+});
+
+
 
 //function for line count
 function updateLineCount() {
