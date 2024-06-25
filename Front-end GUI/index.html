@@ -9,13 +9,29 @@
 </head>
 
 <body>
+  <!-- Code editor -->
+  <div id="container">
+    <h1>Code editor</h1>
+    <div id="code-container">
+      <div id="lines"></div>
+      <textarea id="code" placeholder="Vui lòng nhập dữ liệu của bạn!!!" oninput="updateLineCount()"
+        cols="10000"></textarea>
+
+    </div>
+
+    <div id="lineCount" class="line-numbers"></div>
+    <button id="run_btn" onclick="executeCommands()">Run</button>
+    <div class="console">
+      <h3>Console</h2>
+        <div id="Output"></div>
+    </div>
+
+  </div>
+
+
+  <!-- I/O -->
   <div class="main">
     <h1 class="title1">INPUTS</h1>
-    <div id="upload">
-      <input type="file" id="file-upload" accept=".txt">
-      <label for="file-upload" id="file-label">Choose Text File</label>
-      <button id="upload-btn">Upload</button>
-    </div>
     <h1 class="title2">OUTPUTS</h1>
   </div>
   <div class="HCN">

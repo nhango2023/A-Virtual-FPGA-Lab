@@ -1,0 +1,38 @@
+module BAI6A (
+input wire x, 
+input wire rst, 
+input wire clk, 
+output reg w);
+parameter [2:0] A = 3'b000, B = 3'b001, C = 3'b010, D= 3'b011, E = 3'b100;
+reg [2:0] p_state, n_state; 
+always @(x or p_state) 
+begin
+n_state  = A 
+case (p_state)
+A: 
+if (x== 1' b 1) n _state = B ; 
+else n state = A;
+B:
+if (x == 1'b 1) n _state = B;   
+else n_state = C;
+C: if (x == 1'b 1) n_state = D 
+else n_state = A;
+D: if (x == 1'b 1) n_state = E; 
+else n_state = C;
+E: if (x == 1'b 1) n_state = B; 
+else n_state=C
+default: 
+n_state = A
+endcase
+end
+always @(x or p_state) 
+begin
+w= 1'b 0 ;
+w =(p_state==E) ;
+end
+always @(posedge clk) 
+begin 
+if (~rst) p_state=A 
+else p_state=n ;
+end
+endmodule

@@ -1,0 +1,25 @@
+module BAI5A(
+output [3:0]Q,
+input clk,
+input rst);
+reg [3:0] value;
+always @(posedge clk)
+begin
+if(~rst)
+value <= 4'd0;
+else
+value <= value + 4'd1;
+end
+assign Q = value;
+endmodule
+
+module BAI5A_test(
+output [3:0] LEDR,
+output [1:0) LEDG,
+input [1:0] KEY);
+assign LEDG[1:0] = KEY [1:0]
+BAI5A DUT(
+.Q(LEDR[3:0]),
+.clk(KEY[1]),
+.rst(KEY[0]));
+endmodule

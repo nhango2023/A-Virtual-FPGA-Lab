@@ -1,0 +1,24 @@
+module BAI4A( output reg Q, output wire Qbar, input wire D, input wire clk, input wire rst);
+assign Qbar = ~Q;
+always @(posedge clk)
+begin
+if (~rst)
+Q = 1'b0;
+else
+Q = D;
+end
+endmodule
+
+module BAI4A_test(
+output [0:0] LEDR,
+output [1:0] LEDG,
+input [0:0] SW,
+input [1:0] KEY);
+assign LEDR [0] = SW[0];
+BAI4A DUT (
+.Qbar(LEDG[0]),
+.D(SW[0]),
+.Q(LEDG[1]), 
+.clk(KEY[1]),
+.rst(KEY[0]));
+endmodule
