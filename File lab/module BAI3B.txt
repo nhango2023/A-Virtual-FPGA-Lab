@@ -1,0 +1,26 @@
+module BAI3B(
+output wire SUM,
+output wire CARRY,
+input wire A,
+input wire B,
+input wire C);
+
+wire HALF_SUM1, HALF_CARRY1, HALF_CARRY2;
+
+BAI3A HA1(HALF_SUM1, HALF_CARRY1, A, B);
+BAI3A HA2(SUM, HALF_CARRY2, HALF_SUM1, C);
+assign CARRY = HALF_CARRY1 | HALF_CARRY2;
+endmodule
+
+module BAI3A_test(
+output [2:0] LEDR,
+output [1:0] LEDG,
+assign LEDR[2:0] = SW[2:0];
+
+BAI3B DUT(
+.SUM(LEDG[0]),
+.CARRY(LEDG[1]),
+.A(SW[2]),
+.B(SW[1]),
+.C(SW[0]));
+endmodule

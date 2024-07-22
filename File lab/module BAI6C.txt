@@ -1,0 +1,132 @@
+module BAI6C
+input wire clk, 
+input wire rst,
+output reg [5:0] lights);
+
+reg[2:0] state;
+reg[3:0] count;
+
+parameter S0=3'b000,S1=3'b001,S2=3'b010, // states S3=3'b011,S4=3'b100,S5=3'b101:
+
+parameter SEC5=4'b1111, SEC1=4'b0011;// delays
+always @(posedge clk)
+
+begin
+if (~rst)
+begin
+state <= S0;
+count <= 0;
+end
+else
+case (state)
+S0: if(count < SEC5)
+begin
+state <= S0;
+count <= count + 1;
+end
+else
+begin
+state <= S1;
+count <= 0;
+end
+S1: if(count < SEC1)
+begin
+state <= S1;
+count <= count + 1;
+end
+else
+begin
+state <= S2;
+count <= 0;
+end
+S2: if(count < SEC1)
+begin
+state <= S2:
+count <= count + 1;
+end
+else
+begin
+state <= S3;
+count <= 0;
+end 
+S3: if(count < SEC5)
+begin
+state <= S3;
+count <= count + 1;
+end
+else
+begin
+state <=S4:
+count <= 0;
+end
+S4: if(count < SEC1)
+begin
+state <=S4:
+count <= count + 1;
+end
+else
+begin
+state <= S5;
+count <= 0;
+end
+S5: if (count < SEC1)
+begin
+state <= S5;
+count <= count + 1;
+end
+else
+begin
+state <= S0;
+count <= 0;
+end
+default state <= S0;
+endcase
+end
+always @(*)
+begin
+case (state)
+S0: lights = 6'b100001; 
+S1: lights = 6'b010001;
+S2: lights = 6'b001001; 
+S3: lights = 6'b001100; 
+S4: lights = 6'b001010; 
+55: lights = 6'b001001; 
+default lights = 6'b100001; 
+endcase
+end
+endmodule
+
+
+module CLOCK_DIV (
+input wire clk, 
+input wire rst,
+output wire clk3
+reg [24:0] q;
+always @(posedge clk)
+begin
+if (~rst) 
+q <= 0; 
+else q<= q + 1;
+end
+assign clk3 = q [24]; // 3 Hz
+endmodule
+
+
+module BAI6C_test (
+input wire CLOCK_50,
+input wire [0:0] KEY, 
+output wire [5:0] LEDR, 
+output wire [0:0] LEDG);
+wire clk3;
+assign LEDG [0] = KEY[0];
+
+CLOCK_DIV U1 (
+.clk (CLOCK_50), 
+.rst (KEY [0]), 
+.clk3(clk3));
+
+BAI6C U2 (
+.clk(clk3), 
+.rst (KEY[0]), 
+.lights (LEDR[5:0]));
+endmodule

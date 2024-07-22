@@ -10,14 +10,17 @@ const BAI5A = `moduleBAI5A(output[3:0]Q,inputclk,inputrst);reg[3:0]value;always@
 
 const BAI6A = `moduleBAI6A(inputwirex,inputwirerst,inputwireclk,outputregw);parameter[2:0]A=3'b000,B=3'b001,C=3'b010,D=3'b011,E=3'b100;reg[2:0]p_state,n_state;always@(xorp_state)beginn_state=Acase(p_state)A:if(x==1'b1)n_state=B;elsenstate=A;B:if(x==1'b1)n_state=B;elsen_state=C;C:if(x==1'b1)n_state=Delsen_state=A;D:if(x==1'b1)n_state=E;elsen_state=C;E:if(x==1'b1)n_state=B;elsen_state=Cdefault:n_state=Aendcaseendalways@(xorp_state)beginw=1'b0;w=(p_state==E);endalways@(posedgeclk)beginif(~rst)p_state=Aelsep_state=n;endendmodule`
 
-// switch
-const switchInputs = document.querySelectorAll('.switch-input')
+// switch on UI
+const switch_UI = document.querySelectorAll('.switch-input');
 
-//led
-const ledOutput = document.querySelectorAll('.led')
+//led on UI
+const led_green_UI = document.querySelectorAll(`.led-green`);
+
+//led on UI
+const led_red_UI = document.querySelectorAll('.led-red');
 
 // Output of complie verilog code
-var output = document.getElementById('Output');
+const output = document.getElementById('Output');
 
 //Code editor
 const textArea = document.getElementById("code");
@@ -26,6 +29,7 @@ const textArea = document.getElementById("code");
 var Io_computing;
 
 //save text from textarea
+
 document.getElementById('saveButton').addEventListener('click', function () {
     // Get the text from the textarea
     let textToSave = document.getElementById('code').value;
@@ -77,8 +81,6 @@ document.getElementById('fileInput').addEventListener('change', function (event)
     // Read the file as text
     reader.readAsText(file);
 });
-
-
 
 //function for line count
 function updateLineCount() {
@@ -328,97 +330,112 @@ function complie_code(module_name) {
     }
 }
 
-//select class push button
+//push button on UI
 const buttons = document.querySelectorAll(".button");
 
-// input from push button
-var button_input = [0, 0, 0, 0];
-
+// push button
+let push_button = [0, 0, 0, 0];
 
 // function keydown of push button
 document.addEventListener("keydown", function (event) {
-    if (event.key === "1") { // Keycode for number 1
-        button_input[0] = 1;
-        buttons[0].classList.add("active");
+    if (event.key === "0") { // Keycode for number 1
+        push_button[3] = 1;
+        buttons[3].classList.add("active");
 
     }
-    else if (event.key === "2") { // Keycode for number 2
-        button_input[1] = 1;
-        buttons[1].classList.add("active");
-
-    } else if (event.key === "3") { // Keycode for number 3
-        button_input[2] = 1;
+    else if (event.key === "1") { // Keycode for number 2
+        push_button[2] = 1;
         buttons[2].classList.add("active");
-    } else if (event.key === "4") { // Keycode for number 4
-        button_input[3] = 1;
-        buttons[3].classList.add("active");
+
+    } else if (event.key === "2") { // Keycode for number 3
+        push_button[1] = 1;
+        buttons[1].classList.add("active");
+    } else if (event.key === "3") { // Keycode for number 4
+        push_button[0] = 1;
+        buttons[0].classList.add("active");
     }
 });
 
 // function keydown of push button
 document.addEventListener("keyup", function (event) {
-    if (event.key === "1") { // Keycode for number 1
-        button_input[0] = 0;
-        buttons[0].classList.remove("active");
-    }
-    else if (event.key === "2") { // Keycode for number 2
-        button_input[1] = 0;
-        buttons[1].classList.remove("active");
-    } else if (event.key === "3") { // Keycode for number 3
-        button_input[2] = 0;
-        buttons[2].classList.remove("active");
-    } else if (event.key === "4") { // Keycode for number 4
-        button_input[3] = 0;
+    if (event.key === "0") { // Keycode for number 1
+        push_button[3] = 0;
         buttons[3].classList.remove("active");
+    }
+    else if (event.key === "1") { // Keycode for number 2
+        push_button[2] = 0;
+        buttons[2].classList.remove("active");
+    } else if (event.key === "2") { // Keycode for number 3
+        push_button[1] = 0;
+        buttons[1].classList.remove("active");
+    } else if (event.key === "3") { // Keycode for number 4
+        push_button[0] = 0;
+        buttons[0].classList.remove("active");
     }
 });
 
 
-
-
-//sign from switch
-let switch_input = [];
-
-
+//initial switch and green led
+let dip_switch = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+let ledGreen = [0, 0, 0, 0, 0, 0, 0, 0];
 //--------------------------------------------------------------------------------------------//
 //global variable for BAI4A
 let pre_clk_BAI4A = 0;
-let Q = 0;
+let Q_BAI4A = 0;
 
 //count global variable for BAI5A
-let value = 0;
+let value_BAI5A = 0;
 let pre_clk_BAI5A = 0;
 
-//2 global variables for BAI6A
-let p_state = 0
-let n_state = 0
+// global variables for BAI6A
+let p_state_BAI6A = 0
+let n_state_BAI6A = 0
 let pre_clk_BAI6A = 0;
-let w = 0
+let w_BAI6A = 0
+
+//global variables for BAI3C
+let X_BAI3C = [0, 0, 0, 0, 0, 0, 0, 0];
+let En_BAI3C = 0;
+
+//global variables for BAI4B
+let pre_clk_BAI4B = 0;
+
+//global variables for BAI4C
+let pre_clk_BAI4C = 0;
+let S_reg_BAI4C = [0, 0, 0, 0, 0, 0, 0, 0];
+let S_reg_pre_BAI4C = [0, 0, 0, 0, 0, 0, 0, 0];
+let S_next_BAI4C = [0, 0, 0, 0, 0, 0, 0, 0];
+let ctrl_BAI4C = [0, 0];
+
+//-----------------------------------------------------------------
 
 function rst_All_variable() {
     //global variable for BAI4A
     pre_clk_BAI4A = 0;
-    Q = 0;
+    Q_BAI4A = 0;
 
     //count global variable for BAI5A
-    value = 0;
+    value_BAI5A = 0;
     pre_clk_BAI5A = 0;
 
     //2 global variables for BAI6A
-    p_state = 0
-    n_state = 0
+    p_state_BAI6A = 0
+    n_state_BAI6A = 0
     pre_clk_BAI6A = 0;
-    w = 0
-    for (let i = 0; i < switchInputs.length; i++) {
-        switchInputs[i].checked = false;
+    w_BAI6A = 0
+    for (let i = 0; i < switch_UI.length; i++) {
+        switch_UI[i].checked = false;
     }
-    for (let i = 0; i < ledOutput.length; i++) {
-        ledOutput[i].classList.remove["active_led"];
+    for (let i = 0; i < 18; i++) {
+        led_green_UI[i].classList.remove["active_ledred"];
+    }
+    for (let i = 18; i < 26; i++) {
+        led_green_UI[i].classList.remove["active_ledgreen"];
     }
 }
 //-------------------------------------------------------------------------------------------//
 //object A
-var A = {
+const A = {
     BAI1: function (x) {
         let LED = [0, 0, 0, 0, 0, 0, 0, 0];
         LED[0] = x
@@ -442,9 +459,9 @@ var A = {
         if (clk == 1 && pre_clk_BAI4A == 0) {
 
             if (rst == 0) {
-                Q = 0
+                Q_BAI4A = 0
             } else {
-                Q = D;
+                Q_BAI4A = D;
             }
         }
         pre_clk_BAI4A = clk;
@@ -456,10 +473,10 @@ var A = {
         let LED = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         if (clk == 1 && pre_clk_BAI5A == 0) {
             if (rst == 0) {
-                value = 0
+                value_BAI5A = 0
             }
             else {
-                (value < 15) ? value++ : value = 0
+                (value_BAI5A < 15) ? value++ : value_BAI5A = 0
             }
         }
         pre_clk_BAI5A = clk;
@@ -478,35 +495,35 @@ var A = {
         let E = 4;//[1, 0, 0];
 
         if (pre_clk_BAI6A === 0 && clk === 1) {
-            n_state = A;
-            switch (p_state) {
+            n_state_BAI6A = A;
+            switch (p_state_BAI6A) {
                 case A:
-                    x ? n_state = B : n_state = A;
+                    x ? n_state_BAI6A = B : n_state_BAI6A = A;
                     break;
                 case B:
-                    x ? n_state = B : n_state = C;
+                    x ? n_state_BAI6A = B : n_state_BAI6A = C;
                     break;
                 case C:
-                    x ? n_state = D : n_state = A;
+                    x ? n_state_BAI6A = D : n_state_BAI6A = A;
                     break;
                 case D:
-                    x ? n_state = E : n_state = C;
+                    x ? n_state_BAI6A = E : n_state_BAI6A = C;
                     break;
                 case E:
-                    x ? n_state = B : n_state = C;
+                    x ? n_state_BAI6A = B : n_state_BAI6A = C;
                     break;
                 default:
-                    n_state = A;
+                    n_state_BAI6A = A;
                     break;
             }
             if (rst === 0) {
-                p_state = A;
+                p_state_BAI6A = A;
             } else {
-                p_state = n_state;
+                p_state_BAI6A = n_state;
             }
-            w = 0;
-            if (p_state === E) {
-                w = 1
+            w_BAI6A = 0;
+            if (p_state_BAI6A === E) {
+                w_BAI6A = 1
             }
         }
 
@@ -514,12 +531,135 @@ var A = {
         LED[0] = w;
         return LED;
     },
+    BAI2B: function (A, B) {
+        let LED = [0, 0, 0, 0, 0, 0, 0, 0];
+        A | B ? LED[7] = 1 : LED[7] = 0;
+        return LED;
+    },
+    BAI2C: function (A, B, C, D) {
+        let LED = [0, 0, 0, 0, 0, 0, 0, 0];
+        LED[7] = ((A ^ B) ^ (C ^ D));
+        return LED;
+    },
+    BAI3B: function (A, B, C) {
+        let LED = [0, 0, 0, 0, 0, 0, 0, 0];
+        let SUM1 = A ^ B
+        let CARRY1 = A & B
+        let CARRY2 = SUM1 & C
+        let CARRY = CARRY1 | CARRY2
+        let SUM = SUM1 ^ C
+
+        LED[7] = SUM;
+        LED[6] = CARRY;
+        return LED;
+    },
+    BAI3C: function (X, En, LED) {
+        if (JSON.stringify(X) !== JSON.stringify(X_BAI3C)
+            || En !== En_BAI3C) {
+
+            if (En) {
+                console.log(X[7]);
+                if (X[7] === 1) {
+                    LED = [0, 0, 0, 0, 0, 1, 1, 1];
+                }
+                else if (X[6] === 1) {
+                    LED = [0, 0, 0, 0, 0, 1, 1, 0];
+                }
+                else if (X[5] === 1) {
+                    LED = [0, 0, 0, 0, 0, 1, 0, 1];
+                }
+                else if (X[4] === 1) {
+                    LED = [0, 0, 0, 0, 0, 1, 0, 0];
+                }
+                else if (X[3] === 1) {
+                    LED = [0, 0, 0, 0, 0, 0, 1, 1];
+                }
+                else if (X[2] === 1) {
+                    LED = [0, 0, 0, 0, 0, 0, 1, 0];
+                }
+                else if (X[1] === 1) {
+                    LED = [0, 0, 0, 0, 0, 0, 0, 1];
+                }
+                else if (X[0] === 1) {
+                    LED = [0, 0, 0, 0, 0, 0, 0, 0];
+                }
+                //b'zzz
+                else {
+                    LED = [0, 0, 0, 0, 0, 0, 0, 0];
+                }
+            }
+        }
+        X_BAI3C = X;
+        En_BAI3C = En;
+        console.log("led: ", LED)
+        return LED;
+    },
+    BAI4B: function (D, clk, rst, Q) {
+        if (clk !== pre_clk_BAI4B && clk === 1) {
+            if (rst === 0) {
+                Q = [0, 0, 0, 0, 0, 0, 0, 0];
+            }
+            else {
+                let Q1 = [0, 0, 0, 0];
+                let Q2 = Q.slice(5, 8);
+                Q2.push(D);
+                Q1.push(...Q2);
+                Q = Q1;
+            }
+        }
+        pre_clk_BAI4B = clk;
+        return Q;
+    },
+    BAI4C: function (clk, rst, ctrl, D) {
+
+        if (pre_clk_BAI4C !== clk && clk === 1) {
+            if (rst === 0) {
+                S_reg_BAI4C = [0, 0, 0, 0, 0, 0, 0, 0];
+            }
+            else {
+                console.log("here");
+                S_reg_pre_BAI4C = S_reg_BAI4C.slice();
+                S_reg_BAI4C = S_next_BAI4C.slice();
+            }
+        }
+        console.log("s_reg: ", S_reg_BAI4C)
+        console.log("s_reg_pre: ", S_reg_pre_BAI4C)
+
+        if (JSON.stringify(ctrl) !== JSON.stringify(ctrl_BAI4C) ||
+            JSON.stringify(S_reg_BAI4C) !== JSON.stringify(S_reg_pre_BAI4C)) {
+            let ctrl_temp = ctrl.join("");
+            if (ctrl_temp === "00") {
+                S_next_BAI4C = S_reg_BAI4C.slice();
+            }
+            else if (ctrl_temp === "01") {
+                console.log("01");
+                let Q1 = S_reg_BAI4C.slice(1, 8);
+                Q1.unshift(D[0]);
+                S_next_BAI4C = Q1.slice();
+            }
+
+            else if (ctrl_temp === "10") {
+                let Q2 = S_reg_BAI4C.slice(1, 7);
+                Q2.push(D[7]);
+                S_next_BAI4C = Q2.slice();
+            }
+            else {
+                S_next_BAI4C = D.slice();
+            }
+        }
+        ctrl_BAI4C = ctrl.slice();
+        pre_clk_BAI4C = clk;
+        S_reg_pre_BAI4C = S_reg_BAI4C.slice();
+        let Q = S_reg_BAI4C.slice();
+
+        return Q;
+    }
 
 };
 
 
 //object B
-var B = {
+const B = {
     SW: [],
     PB: [],
     LED: [],
@@ -544,7 +684,28 @@ var B = {
         }
         else if (name_module == "BAI6A" || name_module == "BAI6A_test") {
             this.LED = a.BAI6A(this.SW[0], this.PB[0], this.PB[1]).slice()
-
+        }
+        else if (name_module == "BAI2B" || name_module == "BAI2B_test") {
+            this.LED = a.BAI2B(this.SW[17], this.SW[16]).slice();
+        }
+        else if (name_module == "BAI2C" || name_module == "BAI2C_test") {
+            this.LED = a.BAI2C(this.SW[17], this.SW[16], this.SW[15], this.SW[14]).slice();
+        }
+        else if (name_module == "BAI3B" || name_module == "BAI3B_test") {
+            this.LED = a.BAI3B(this.SW[17 - 2], this.SW[17 - 1], this.SW[17 - 0]).slice();
+        }
+        else if (name_module == "BAI3C" || name_module == "BAI3C_test") {
+            let x_temp = this.SW.slice(10, 18).reverse()
+            console.log(x_temp[7])
+            this.LED = a.BAI3C(x_temp, this.SW[9], this.LED.slice()).slice();
+        }
+        else if (name_module == "BAI4B" || name_module == "BAI4B_test") {
+            this.LED = a.BAI4B(this.SW[17], this.PB[2], this.PB[3], this.LED).slice();
+        }
+        else if (name_module == "BAI4C" || name_module == "BAI4C_test") {
+            let ctrl = this.SW.slice(8, 10);
+            let D = this.SW.slice(10, 18);
+            this.LED = a.BAI4C(this.PB[2], this.PB[3], ctrl, D).slice();
         }
     },
     passOutputAtoC: function () {
@@ -554,24 +715,22 @@ var B = {
 
 
 //object C
-var C = {
-    SW: [],
-    PB: [],
-    LED: [],
+const C = {
+    SW: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    PB: [0, 0, 0, 0],
+    LED: [0, 0, 0, 0, 0, 0, 0, 0],
 
-    getInputFromUser: function (switch_input, button_input) {
-        this.SW = switch_input.slice();
-        this.PB = button_input.slice();
+    getInputFromUser: function (dip_switch, push_button) {
+        this.SW = dip_switch.slice();
+        this.PB = push_button.slice();
     },
     passInputToB: function (b) {
-        b.SW = this.SW.slice()
-        b.PB = this.PB.slice()
+        b.SW = this.SW.slice();
+        b.PB = this.PB.slice();
+        b.LED = this.LED.slice();
     },
     getOutPutfromB: function (b) {
-
-        this.LED = b.passOutputAtoC().slice()
-
-
+        this.LED = b.passOutputAtoC().slice();
     }
 };
 
@@ -579,26 +738,37 @@ var C = {
 function verilog(name_module) {
     if (name_module != "") {
         // check switch on UI is checked or not
-
-        for (let i = 0; i < switchInputs.length; i++) {
-            switch_input[i] = switchInputs[i].checked ? 1 : 0;
+        for (let i = 0; i < switch_UI.length; i++) {
+            if (switch_UI[i].checked) {
+                dip_switch[i] = 1;
+                led_red_UI[i].classList.add('active_ledred');
+            } else {
+                dip_switch[i] = 0;
+                led_red_UI[i].classList.remove('active_ledred');
+            }
         }
         // C get input from user
-        C.getInputFromUser(switch_input, button_input);
+        C.getInputFromUser(dip_switch, push_button);
         //C pass input for B
         C.passInputToB(B);
         //B pass input to A and get output from A
         B.passInputBtoA_and_get_output_from_A(A, name_module);
         //C get output from B
         C.getOutPutfromB(B);
-        // toggle class active_led on bar led 
-        for (let i = 0; i < ledOutput.length; i++) {
-            ledOutput[i].classList.toggle('active_led', C.LED[i] == 1);
+
+        // toggle class active_led on green led 
+        for (let i = 0; i < ledGreen.length; i++) {
+            led_green_UI[i].classList.toggle('active_ledgreen', C.LED[i] === 1);
         }
-
     }
-
 }
+
+// setInterval(() => {
+//     verilog("BAI4C");
+// }, 100);
+
+
+
 
 
 

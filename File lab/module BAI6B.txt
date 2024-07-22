@@ -1,0 +1,32 @@
+module BAI6B ( input wire x, input wire clk, input wire rst, output reg w);
+parameter [1/0] A = 2' b 00, B = 2' * b 01, c = 2' * b D = 2' * b 11;
+reg [1/0] p_state, n_state; // present and next
+
+state A: //Reset state case (p state)
+At if (x = 1'b 1) n_state = B; else n_state = A;
+B:
+if (x = 1'b 1) n_state = B; else n_state = C;
+C:
+if (x == 1'b 1) n_state = D; else n state = A;
+D:
+if (x == 1'b 1) n state = B; else n_state = C;
+default: n_state = A; // reset state
+endcase
+end
+always (x or p_state) begin: Outputing
+w= 1'b 0;
+W (p_state == D) & (x == 1'b 1);
+end
+//synchrom //reset stat
+always @(posedge clk) begin: Registering if (~rst) p_state = A;
+else p_state n_state; -n
+end
+endmodule
+
+module BAI6B test(
+- output [0:0] LEDG,
+input [0:0] SW,
+input [0:1] KEY);
+BAI6B DUT (
+.x (SW[0]), .clk(KEY[1]), .rst(KEY[0]), .w(LEDG[0]));
+endmodule

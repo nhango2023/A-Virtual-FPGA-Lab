@@ -1,0 +1,21 @@
+module BAI4B (
+output reg [3:0] Q,
+input wire D,
+input wire clk,
+input wire rst);
+always @(posedge clk)
+if (~rst)
+Q <= 4'b0;
+else
+Q <= {Q[2:0],D};
+endmodule
+
+module BAI4B_test(
+output [0:0] LEDR,
+output [3:0] LEDG,
+input [0:0] SW,
+input [1:0] KEY);
+assign LEDR[0] = SW[0];
+BAI4B DUT (
+.Q(LEDG[3:0]), .clk(KEY[1]), .rst(KEY[0]), .D(SW[0]));
+endmodule

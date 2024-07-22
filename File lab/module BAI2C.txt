@@ -1,0 +1,23 @@
+module BAI2C(
+output wire Y,
+input wire A,
+input wire B,
+input wire C,
+input wire D);
+
+assign Y = ((A^B)^(C^D));
+endmodule
+
+module BAI2C_test(
+output [0:3] LEDR, 
+output [0:0] LEDG,
+input [0:3] SW);
+assign LEDR[0:3] = SW[0:3];
+
+BAI2C_DUT(
+.Y(LEDG[0]),
+.A(SW[0]),
+.B(SW[1]),
+.C(SW[2]),
+.D(SW[3]));
+endmodule

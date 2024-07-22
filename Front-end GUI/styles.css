@@ -10,7 +10,43 @@ body {
   justify-content: center;
 }
 
-#container {
+.HCN {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+}
+
+.HCN img {
+  width: 600px;
+  height: 400px;
+}
+
+.container img {
+  width: 100%;
+  height: auto;
+}
+
+.container .btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #555;
+  color: white;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.container .btn:hover {
+  background-color: black;
+}
+
+.container {
   width: 823px;
   text-align: center;
   background: white;
@@ -49,7 +85,7 @@ body {
   border-radius: 5px;
 }
 
-#code-container {
+.code-container {
   width: 830px;
   height: 400px;
   border: 2px solid;
@@ -58,8 +94,8 @@ body {
 }
 
 
-
 textarea {
+
   height: 10000px;
   padding: 30px 5px 30px 5px;
   font-size: 16px;
@@ -92,6 +128,8 @@ textarea {
   border-radius: 5px;
 }
 
+
+
 #run_btn:hover {
   background-color: #218838;
 }
@@ -101,9 +139,9 @@ textarea {
 }
 
 #Output {
-  height: 80px;
+  height: 85px;
   border: 1px solid black;
-  color: #f00;
+  color: rgb(0, 30, 255);
   overflow-wrap: break-word;
 }
 
@@ -144,53 +182,31 @@ textarea {
 
 }
 
-.input {
-  width: 400px;
-  height: 400px;
-  background-color: rgb(235, 237, 237);
-  margin: 10px;
-  position: relative;
 
-}
 
-.output {
-  width: 400px;
-  height: 400px;
-  background-color: rgb(235, 237, 237);
-  margin: 10px;
-  position: relative;
-}
 
-.text1 {
-  text-align: center;
-
-}
 
 .push-buttons {
-  width: 200px;
-  height: 80px;
-  background-color: rgb(140, 142, 143);
+  width: 135px;
+  height: 30px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
   position: absolute;
-  right: 100px;
-  border: 5px solid #747171;
+  border: 3px solid #000000;
+  right: 190px;
+  top: 89.1%;
+  left: 72.5%;
+
 }
 
 .button {
-  padding: 10px 20px;
-  background-color: #f0f0f0;
-  width: 50px;
-  height: 50px;
-}
-
-.button1 {
-  width: 50px;
-  height: 30px;
-  font-size: 20px;
-  background-color: rgb(29, 189, 29);
+  padding: 13px 13px;
+  background-color: #fcfcfc;
+  border-radius: 22px;
+  width: 25px;
+  height: 23px;
 }
 
 .active {
@@ -208,17 +224,19 @@ textarea {
 .Dip-switches {
   display: flex;
   flex-wrap: wrap;
-  width: 253px;
-  height: 98px;
-  background-color: blue;
+  width: 328px;
+  height: 28px;
+  background-color: rgba(0, 0, 0, 0);
   position: absolute;
-  right: 70px;
-  top: 260px;
+  right: 114px;
+  top: 356px;
   align-items: center;
-  border: 5px solid #747171;
+
 }
 
 .switch {
+  width: 18px;
+  height: 50px;
   position: relative;
 }
 
@@ -228,39 +246,40 @@ textarea {
 
 .switch-label {
   display: inline-block;
-  width: 30px;
-  height: 60px;
+  width: 8.7px;
+  height: 11px;
   background-color: #ccc;
   border-radius: 3px;
   cursor: pointer;
   position: relative;
-  border: 1px solid #000000;
+  border: 4.78px solid #000000;
   margin: auto;
   align-items: center;
 }
 
 .switch-input:checked+.switch-label {
-  background-color: red;
+  width: 13px;
+  /* background-color: red; */
 }
 
 .switch-label::after {
   content: '';
   position: absolute;
-  width: 30px;
-  height: 30px;
+  width: 12.5px;
+  height: 14px;
   border-radius: 2px;
-  background-color: white;
+  background-color: rgb(255, 255, 255);
   top: 0px;
   left: 0px;
   transition: transform 0.2s ease-in-out;
 }
 
 .switch-input:checked+.switch-label::after {
-  transform: translateY(30px);
+  transform: translateY(12px);
 }
 
 .button2 {
-  width: 31.5px;
+  width: 32.5px;
   height: 31.5px;
   font-size: 15px;
   background-color: blue;
@@ -272,28 +291,40 @@ textarea {
 }
 
 .Bar-Leds {
-  width: 320px;
-  height: 99px;
+  width: 466px;
+  height: 14px;
   background-color: rgb(140, 142, 143);
   position: absolute;
-  right: 35px;
+  top: 83.7%;
+  left: -10.45%;
   flex-wrap: wrap;
-  align-items: center;
   display: flex;
-  border: 5px solid #747171;
+  border: 2px solid #000000;
 
 }
 
 .led {
-  width: 30px;
-  height: 60px;
+  width: 16.3px;
+  height: 12px;
   border-radius: 2px;
   background-color: #ccc;
   border: 1px solid #000000;
 }
 
-.active_led {
+.ledgreen {
+  width: 16.3px;
+  height: 12px;
+  border-radius: 2px;
+  background-color: #ccc;
+  border: 1px solid #000000;
+}
+
+.active_ledred {
   background-color: red;
+}
+
+.active_ledgreen {
+  background-color: rgb(25, 246, 5);
 }
 
 .button3 {
@@ -312,15 +343,467 @@ textarea {
   width: 190px;
 }
 
-.segment {
-  width: 80px;
-  height: 100px;
-  border-radius: 2px;
+.segment1 {
+  width: 35px;
+  height: 35px;
+  border-radius: 1px;
   background-color: #000000;
-  border: 5px solid #747171;
-  right: 150px;
-  top: 260px;
+  border: 3.5px solid #ffffff;
+  right: 99.2%;
+  top: 73%;
   display: flex;
   flex-wrap: wrap;
   position: absolute;
+}
+
+.segment2 {
+  width: 35px;
+  height: 35px;
+  border-radius: 1px;
+  background-color: #000000;
+  border: 3.5px solid #ffffff;
+  right: 84.7%;
+  top: 73%;
+  display: flex;
+  flex-wrap: wrap;
+  position: absolute;
+}
+
+.segment3 {
+  width: 35px;
+  height: 35px;
+  border-radius: 1px;
+  background-color: #000000;
+  border: 3.5px solid #ffffff;
+  right: 68%;
+  top: 73%;
+  display: flex;
+  flex-wrap: wrap;
+  position: absolute;
+}
+
+.segment4 {
+  width: 35px;
+  height: 35px;
+  border-radius: 1px;
+  background-color: #000000;
+  border: 3.5px solid #ffffff;
+  right: 57.5%;
+  top: 73%;
+  display: flex;
+  flex-wrap: wrap;
+  position: absolute;
+}
+
+
+.segment {
+  display: inline-block;
+  width: 30px;
+  height: 50px;
+  position: relative;
+  margin: 10px;
+  right: 220.5px;
+  top: -119.5px;
+}
+
+.segment .bar {
+  position: absolute;
+  background-color: gray;
+  border-radius: 10%;
+}
+
+.segment .bar.top {
+  top: 19%;
+  right: 21%;
+  width: 2.5px;
+  height: 10px;
+  transform: rotate(90deg);
+  transform-origin: top right;
+  border-radius: 10%;
+}
+
+.segment .bar.top-left {
+  top: 20%;
+  left: 37%;
+  width: 2.5px;
+  height: 10px;
+  transform: rotate(0deg);
+  transform-origin: top left;
+  border-radius: 10%;
+}
+
+.segment .bar.top-right {
+  top: 20%;
+  left: 80%;
+  width: 2.5px;
+  height: 10px;
+  transform: rotate(0deg);
+  transform-origin: top left;
+  border-radius: 10%;
+}
+
+.segment .bar.bottom-right {
+  top: 47%;
+  left: 81%;
+  width: 2.5px;
+  height: 10px;
+  transform: rotate(0deg);
+  transform-origin: top left;
+  border-radius: 10%;
+}
+
+.segment .bar.bottom-left {
+  bottom: 5px;
+  top: 47%;
+  left: 37%;
+  width: 2.5px;
+  height: 10px;
+  transform: rotate(0deg);
+  transform-origin: bottom left;
+  border-radius: 10%;
+}
+
+.segment .bar.bottom {
+  bottom: 5px;
+  top: 53%;
+  right: 53%;
+  width: 2.5px;
+  height: 10px;
+  transform: rotate(90deg);
+  transform-origin: bottom right;
+  border-radius: 10%;
+}
+
+.segment .bar.center {
+  bottom: 5px;
+  top: 26%;
+  right: 53%;
+  width: 2.5px;
+  height: 10px;
+  transform: rotate(90deg);
+  transform-origin: bottom right;
+  border-radius: 10%;
+}
+
+.segment .bar.dot {
+  bottom: 5px;
+  top: 69%;
+  right: 9%;
+  width: 8%;
+  height: 4%;
+  transform: rotate(90deg);
+  transform-origin: bottom right;
+  border-radius: 10%;
+}
+
+.segment5 {
+  display: inline-block;
+  width: 30px;
+  height: 50px;
+  position: relative;
+  margin: 10px;
+  right: 163.5px;
+  top: -189.5px;
+}
+
+.segment5 .bar1 {
+  position: absolute;
+  background-color: gray;
+  border-radius: 10%;
+}
+
+.segment5 .bar1.top {
+  top: 19%;
+  right: 21%;
+  width: 2.5px;
+  height: 10px;
+  transform: rotate(90deg);
+  transform-origin: top right;
+  border-radius: 10%;
+}
+
+.segment5 .bar1.top-left {
+  top: 20%;
+  left: 37%;
+  width: 2.5px;
+  height: 10px;
+  transform: rotate(0deg);
+  transform-origin: top left;
+  border-radius: 10%;
+}
+
+.segment5 .bar1.top-right {
+  top: 20%;
+  left: 80%;
+  width: 2.5px;
+  height: 10px;
+  transform: rotate(0deg);
+  transform-origin: top left;
+  border-radius: 10%;
+}
+
+.segment5 .bar1.bottom-right {
+  top: 47%;
+  left: 81%;
+  width: 2.5px;
+  height: 10px;
+  transform: rotate(0deg);
+  transform-origin: top left;
+  border-radius: 10%;
+}
+
+.segment5 .bar1.bottom-left {
+  bottom: 5px;
+  top: 47%;
+  left: 37%;
+  width: 2.5px;
+  height: 10px;
+  transform: rotate(0deg);
+  transform-origin: bottom left;
+  border-radius: 10%;
+}
+
+.segment5 .bar1.bottom {
+  bottom: 5px;
+  top: 53%;
+  right: 53%;
+  width: 2.5px;
+  height: 10px;
+  transform: rotate(90deg);
+  transform-origin: bottom right;
+  border-radius: 10%;
+}
+
+.segment5 .bar1.center {
+  bottom: 5px;
+  top: 26%;
+  right: 53%;
+  width: 2.5px;
+  height: 10px;
+  transform: rotate(90deg);
+  transform-origin: bottom right;
+  border-radius: 10%;
+}
+
+.segment5 .bar1.dot {
+  bottom: 5px;
+  top: 69%;
+  right: 9%;
+  width: 8%;
+  height: 4%;
+  transform: rotate(90deg);
+  transform-origin: bottom right;
+  border-radius: 10%;
+}
+
+.segment6 {
+  display: inline-block;
+  width: 30px;
+  height: 50px;
+  position: relative;
+  margin: 10px;
+  right: 53.3px;
+  top: -134.5px;
+}
+
+.segment6 .bar2 {
+  position: absolute;
+  background-color: gray;
+  border-radius: 10%;
+}
+
+.segment6 .bar2.top {
+  top: 19%;
+  right: 21%;
+  width: 2.5px;
+  height: 10px;
+  transform: rotate(90deg);
+  transform-origin: top right;
+  border-radius: 10%;
+}
+
+.segment6 .bar2.top-left {
+  top: 20%;
+  left: 37%;
+  width: 2.5px;
+  height: 10px;
+  transform: rotate(0deg);
+  transform-origin: top left;
+  border-radius: 10%;
+}
+
+.segment6 .bar2.top-right {
+  top: 20%;
+  left: 80%;
+  width: 2.5px;
+  height: 10px;
+  transform: rotate(0deg);
+  transform-origin: top left;
+  border-radius: 10%;
+}
+
+.segment6 .bar2.bottom-right {
+  top: 47%;
+  left: 81%;
+  width: 2.5px;
+  height: 10px;
+  transform: rotate(0deg);
+  transform-origin: top left;
+  border-radius: 10%;
+}
+
+.segment6 .bar2.bottom-left {
+  bottom: 5px;
+  top: 47%;
+  left: 37%;
+  width: 2.5px;
+  height: 10px;
+  transform: rotate(0deg);
+  transform-origin: bottom left;
+  border-radius: 10%;
+}
+
+.segment6 .bar2.bottom {
+  bottom: 5px;
+  top: 53%;
+  right: 53%;
+  width: 2.5px;
+  height: 10px;
+  transform: rotate(90deg);
+  transform-origin: bottom right;
+  border-radius: 10%;
+}
+
+.segment6 .bar2.center {
+  bottom: 5px;
+  top: 26%;
+  right: 53%;
+  width: 2.5px;
+  height: 10px;
+  transform: rotate(90deg);
+  transform-origin: bottom right;
+  border-radius: 10%;
+}
+
+.segment6 .bar2.dot {
+  bottom: 5px;
+  top: 69%;
+  right: 9%;
+  width: 8%;
+  height: 4%;
+  transform: rotate(90deg);
+  transform-origin: bottom right;
+  border-radius: 10%;
+}
+
+.segment7 {
+  display: inline-block;
+  width: 30px;
+  height: 50px;
+  position: relative;
+  margin: 10px;
+  right: 32.3px;
+  top: -169.5px;
+}
+
+.segment7 .bar3 {
+  position: absolute;
+  background-color: gray;
+  border-radius: 10%;
+}
+
+.segment7 .bar3.top {
+  top: 19%;
+  right: 21%;
+  width: 2.5px;
+  height: 10px;
+  transform: rotate(90deg);
+  transform-origin: top right;
+  border-radius: 10%;
+}
+
+.segment7 .bar3.top-left {
+  top: 20%;
+  left: 37%;
+  width: 2.5px;
+  height: 10px;
+  transform: rotate(0deg);
+  transform-origin: top left;
+  border-radius: 10%;
+}
+
+.segment7 .bar3.top-right {
+  top: 20%;
+  left: 80%;
+  width: 2.5px;
+  height: 10px;
+  transform: rotate(0deg);
+  transform-origin: top left;
+  border-radius: 10%;
+}
+
+.segment7 .bar3.bottom-right {
+  top: 47%;
+  left: 81%;
+  width: 2.5px;
+  height: 10px;
+  transform: rotate(0deg);
+  transform-origin: top left;
+  border-radius: 10%;
+}
+
+.segment7 .bar3.bottom-left {
+  bottom: 5px;
+  top: 47%;
+  left: 37%;
+  width: 2.5px;
+  height: 10px;
+  transform: rotate(0deg);
+  transform-origin: bottom left;
+  border-radius: 10%;
+}
+
+.segment7 .bar3.bottom {
+  bottom: 5px;
+  top: 53%;
+  right: 53%;
+  width: 2.5px;
+  height: 10px;
+  transform: rotate(90deg);
+  transform-origin: bottom right;
+  border-radius: 10%;
+}
+
+.segment7 .bar3.center {
+  bottom: 5px;
+  top: 26%;
+  right: 53%;
+  width: 2.5px;
+  height: 10px;
+  transform: rotate(90deg);
+  transform-origin: bottom right;
+  border-radius: 10%;
+}
+
+.segment7 .bar3.dot {
+  bottom: 5px;
+  top: 69%;
+  right: 9%;
+  width: 8%;
+  height: 4%;
+  transform: rotate(90deg);
+  transform-origin: bottom right;
+  border-radius: 10%;
+}
+
+@media(max-width: 900px) {
+  container {
+    display: block;
+  }
+
+  .main,
+  .HCN {
+    width: 100%;
+  }
+
 }
