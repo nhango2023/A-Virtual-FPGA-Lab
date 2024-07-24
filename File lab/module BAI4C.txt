@@ -17,18 +17,18 @@ begin
 case (ctrl)
 0: S_next = S_reg;
 1: S next = {D[7],S_reg[7:1]};
-2: S next = {S_reg [6:0],D[0]);
+2: S next = {S_reg [6:0],D[0]};
 3: S next = D;
 endcase
 end
-assign Q S reg:
+assign Q = S_reg:
 endmodule
 
 module BAI4C_test (
 output [9:0]LEDR,
-output [7:0] LEDG,
+output [7:0]LEDG,
 input [9:0]SW,
-input [1:0] KEY);
+input [1:0]KEY);
 assign LEDR [9:0] = SW [9:0];
 BAI4C DUT(
 .Q(LEDG[7:0]), .clk(KEY[1]),

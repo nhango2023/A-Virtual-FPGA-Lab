@@ -341,11 +341,17 @@ document.addEventListener("keydown", function (event) {
     if (event.key === "0") { // Keycode for number 1
         push_button[3] = 1;
         buttons[3].classList.add("active");
+        if (name_module === "BAI5B" || name_module === "BAI5C" || name_module === "BAI6C") {
+            led_green_UI[7].classList.add("active_ledgreen")
+        }
 
     }
     else if (event.key === "1") { // Keycode for number 2
         push_button[2] = 1;
         buttons[2].classList.add("active");
+        if (name_module === "BAI5B" || name_module === "BAI5C") {
+            led_green_UI[6].classList.add("active_ledgreen")
+        }
 
     } else if (event.key === "2") { // Keycode for number 3
         push_button[1] = 1;
@@ -361,10 +367,16 @@ document.addEventListener("keyup", function (event) {
     if (event.key === "0") { // Keycode for number 1
         push_button[3] = 0;
         buttons[3].classList.remove("active");
+        if (name_module === "BAI5B" || name_module === "BAI5C" || name_module === "BAI6C") {
+            led_green_UI[7].classList.remove("active_ledgreen")
+        }
     }
     else if (event.key === "1") { // Keycode for number 2
         push_button[2] = 0;
         buttons[2].classList.remove("active");
+        if (name_module === "BAI5B" || name_module === "BAI5C") {
+            led_green_UI[6].classList.remove("active_ledgreen")
+        }
     } else if (event.key === "2") { // Keycode for number 3
         push_button[1] = 0;
         buttons[1].classList.remove("active");
@@ -378,6 +390,7 @@ document.addEventListener("keyup", function (event) {
 //initial switch and green led
 let dip_switch = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 let ledGreen = [0, 0, 0, 0, 0, 0, 0, 0];
+let ledRed = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 //--------------------------------------------------------------------------------------------//
 //global variable for BAI4A
 let pre_clk_BAI4A = 0;
@@ -406,6 +419,62 @@ let S_reg_BAI4C = [0, 0, 0, 0, 0, 0, 0, 0];
 let S_reg_pre_BAI4C = [0, 0, 0, 0, 0, 0, 0, 0];
 let S_next_BAI4C = [0, 0, 0, 0, 0, 0, 0, 0];
 let ctrl_BAI4C = [0, 0];
+
+//global variables for BAI5B
+let pre_clk_BAI5B = 0;
+let value_BAI5B = 0;
+
+//global variables for BAI5B
+let pre_clk_BAI5C = 0;
+let value_BAI5C = [0, 0, 0, 0];
+
+// global variables for BAI6A
+let p_state_BAI6B = 0
+let n_state_BAI6B = 0
+let pre_clk_BAI6B = 0;
+let w_BAI6B = 0
+let x_pre_BAI6B = 0
+let p_state_pre_BAI6B = 0;
+
+// global fucntion for BAI6C
+let light_BAI6C = [1, 0, 0, 0, 0, 1];
+let flag_BAI6C = 2;
+let delay_BAI6C = () => {
+    light_BAI6C = [1, 0, 0, 0, 0, 1]
+    let s0, s1, s2, s3, s4, s5;
+    clearTimeout(s0);
+    clearTimeout(s1);
+    clearTimeout(s2);
+    clearTimeout(s3);
+    clearTimeout(s4);
+    clearTimeout(s5);
+    s0 = setTimeout(() => {
+        console.log("s1");
+        light_BAI6C = [0, 1, 0, 0, 0, 1];
+    }, 15000);
+    s1 = setTimeout(() => {
+        console.log("s2");
+        light_BAI6C = [0, 0, 1, 0, 0, 1];
+    }, 18000)
+    s2 = setTimeout(() => {
+        console.log("s3");
+        light_BAI6C = [0, 0, 1, 1, 0, 0];
+    }, 21000)
+    s3 = setTimeout(() => {
+        console.log("s4");
+        light_BAI6C = [0, 0, 1, 0, 1, 0];
+    }, 36000)
+    s4 = setTimeout(() => {
+        console.log("s5");
+        light_BAI6C = [0, 0, 1, 0, 0, 1];
+    }, 39000)
+    s5 = setTimeout(() => {
+        console.log("s0");
+        light_BAI6C = [1, 0, 0, 0, 0, 1];
+        flag_BAI6C = 0
+    }, 42000)
+
+}
 
 //-----------------------------------------------------------------
 
@@ -476,7 +545,7 @@ const A = {
                 value_BAI5A = 0
             }
             else {
-                (value_BAI5A < 15) ? value++ : value_BAI5A = 0
+                (value_BAI5A < 15) ? value_BAI5A++ : value_BAI5A = 0
             }
         }
         pre_clk_BAI5A = clk;
@@ -611,53 +680,131 @@ const A = {
         return Q;
     },
     BAI4C: function (clk, rst, ctrl, D) {
-
         if (pre_clk_BAI4C !== clk && clk === 1) {
             if (rst === 0) {
                 S_reg_BAI4C = [0, 0, 0, 0, 0, 0, 0, 0];
             }
             else {
-                console.log("here");
-                S_reg_pre_BAI4C = S_reg_BAI4C.slice();
-                S_reg_BAI4C = S_next_BAI4C.slice();
+                console.log("S_reg_BAI4C = S_next_BAI4C;");
+                S_reg_pre_BAI4C = S_reg_BAI4C;
+                S_reg_BAI4C = S_next_BAI4C;
             }
         }
-        console.log("s_reg: ", S_reg_BAI4C)
-        console.log("s_reg_pre: ", S_reg_pre_BAI4C)
 
         if (JSON.stringify(ctrl) !== JSON.stringify(ctrl_BAI4C) ||
             JSON.stringify(S_reg_BAI4C) !== JSON.stringify(S_reg_pre_BAI4C)) {
             let ctrl_temp = ctrl.join("");
             if (ctrl_temp === "00") {
-                S_next_BAI4C = S_reg_BAI4C.slice();
+                S_next_BAI4C = S_reg_BAI4C;
             }
             else if (ctrl_temp === "01") {
-                console.log("01");
-                let Q1 = S_reg_BAI4C.slice(1, 8);
-                Q1.unshift(D[0]);
-                S_next_BAI4C = Q1.slice();
+                let temp = S_reg_BAI4C.slice(0, 7);
+                temp.unshift(D[0]);
+                S_next_BAI4C = temp.slice();
             }
 
             else if (ctrl_temp === "10") {
-                let Q2 = S_reg_BAI4C.slice(1, 7);
-                Q2.push(D[7]);
-                S_next_BAI4C = Q2.slice();
+                let temp = S_reg_BAI4C.slice(1, 8);
+                temp.push(D[7]);
+                S_next_BAI4C = temp;
             }
             else {
-                S_next_BAI4C = D.slice();
+                S_next_BAI4C = D;
             }
         }
-        ctrl_BAI4C = ctrl.slice();
+        ctrl_BAI4C = ctrl;
         pre_clk_BAI4C = clk;
-        S_reg_pre_BAI4C = S_reg_BAI4C.slice();
-        let Q = S_reg_BAI4C.slice();
-
+        S_reg_pre_BAI4C = S_reg_BAI4C;
+        let Q = S_reg_BAI4C;
         return Q;
-    }
+    },
+    BAI5B: function (clk, rst, up_down) {
+        let LED = [0, 0, 0, 0];
+        if (clk == 1 && pre_clk_BAI5B == 0) {
+            if (rst == 0) {
+                value_BAI5B = 0
+            }
+            else if (up_down === 0) {
+                (value_BAI5B < 15) ? value_BAI5B++ : value_BAI5B = 0
+            }
+            else {
+                (value_BAI5B > 0) ? value_BAI5B-- : value_BAI5B = 0
+            }
+        }
+        pre_clk_BAI5B = clk;
+        let str_binary = parseInt(value_BAI5B, 10).toString(2).padStart(4, "0");
+        for (let i = 0; i < 4; i++) {
+            LED[i] = parseInt(str_binary[i], 2);
+        }
+        return LED;
+    },
+    BAI5C: function (clk, rst) {
+        if (clk === 1 && pre_clk_BAI5C === 0) {
+            if (rst === 0) {
+                value_BAI5C = [0, 0, 0, 1];
+            }
+            else {
+                let temp = value_BAI5C[0];
+                value_BAI5C = value_BAI5C.slice(1);
+                value_BAI5C.push(temp);
+            }
+        }
+        pre_clk_BAI5C = clk;
+
+        return value_BAI5C;
+    },
+    BAI6B: function (clk, rst, x) {
+        if (pre_clk_BAI6B === 0 && clk === 1) {
+            n_state_BAI6B = 0;
+            switch (p_state_BAI6B) {
+                case 0:
+                    x ? n_state_BAI6B = 1 : n_state_BAI6B = 0;
+                    break;
+                case 1:
+                    x ? n_state_BAI6B = 1 : n_state_BAI6B = 2;
+                    break;
+                case 2:
+                    x ? n_state_BAI6B = 3 : n_state_BAI6B = 0;
+                    break;
+                case 3:
+                    x ? n_state_BAI6B = 1 : n_state_BAI6B = 2;
+                    break;
+                default:
+                    n_state_BAI6B = 0;
+                    break;
+            }
+            if (rst === 0) {
+                p_state_BAI6B = 0;
+            } else {
+                p_state_pre_BAI6B = p_state_BAI6B;
+                p_state_BAI6B = n_state_BAI6B;
+            }
+        }
+        if (p_state_pre_BAI6B !== p_state_BAI6B || x_pre_BAI6B !== x) {
+            w_BAI6B = 0;
+            if (p_state_BAI6B === 3 && x === 1) {
+                w_BAI6B = 1;
+            }
+        }
+        x_pre_BAI6B = x;
+        pre_clk_BAI6B = clk;
+        console.log(p_state_BAI6B);
+        return w_BAI6B;
+    },
+    BAI6C: function (rst) {
+        if (rst === 0) {
+            flag_BAI6C = 0;
+            light_BAI6C = [1, 0, 0, 0, 0, 1];
+        }
+        if ((flag_BAI6C === 0 || flag_BAI6C === 2) && rst === 1) {
+            flag_BAI6C = 1;
+            delay_BAI6C();
+
+        }
+        return light_BAI6C;
+    },
 
 };
-
-
 //object B
 const B = {
     SW: [],
@@ -676,7 +823,6 @@ const B = {
         }
         else if (name_module == "BAI4A" || name_module == "BAI4A_test") {
             this.LED = a.BAI4A(this.PB[0], this.PB[1], this.SW[0]).slice()
-
         }
         else if (name_module == "BAI5A" || name_module == "BAI5A_test") {
             this.LED = a.BAi5A(this.PB[0], this.PB[1]).slice()
@@ -707,6 +853,28 @@ const B = {
             let D = this.SW.slice(10, 18);
             this.LED = a.BAI4C(this.PB[2], this.PB[3], ctrl, D).slice();
         }
+        else if (name_module == "BAI5B" || name_module == "BAI5B_test") {
+            let temp = a.BAI5B(this.PB[2], this.PB[3], this.SW[17]).slice();
+            console.log(temp)
+            this.LED = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            this.LED.push(...temp);
+        }
+        else if (name_module == "BAI5C" || name_module == "BAI5C_test") {
+            let temp = a.BAI5C(this.PB[2], this.PB[3]).slice();
+            this.LED = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            this.LED.push(...temp);
+        }
+        else if (name_module == "BAI6B" || name_module == "BAI6B_test") {
+            let temp = a.BAI6B(this.PB[2], this.PB[3], this.SW[17]);
+            this.LED = [0, 0, 0, 0, 0, 0, 0];
+            this.LED.push(temp);
+        }
+        else if (name_module == "BAI6C" || name_module == "BAI6C_test") {
+            console.log("pb0: ", this.PB[3])
+            let temp = a.BAI6C(this.PB[3]);
+            this.LED = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            this.LED.push(...temp);
+        }
     },
     passOutputAtoC: function () {
         return this.LED;
@@ -716,9 +884,9 @@ const B = {
 
 //object C
 const C = {
-    SW: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    PB: [0, 0, 0, 0],
-    LED: [0, 0, 0, 0, 0, 0, 0, 0],
+    SW: [],
+    PB: [],
+    LED: [],
 
     getInputFromUser: function (dip_switch, push_button) {
         this.SW = dip_switch.slice();
@@ -730,7 +898,9 @@ const C = {
         b.LED = this.LED.slice();
     },
     getOutPutfromB: function (b) {
+
         this.LED = b.passOutputAtoC().slice();
+
     }
 };
 
@@ -741,7 +911,20 @@ function verilog(name_module) {
         for (let i = 0; i < switch_UI.length; i++) {
             if (switch_UI[i].checked) {
                 dip_switch[i] = 1;
-                led_red_UI[i].classList.add('active_ledred');
+                if (name_module === "BAI6B") {
+                }
+                else if (name_module !== "BAI5B" && name_module !== "BAI5C" && name_module !== "BAI6C") {
+                    led_red_UI[i].classList.add('active_ledred');
+                }
+                else {
+                    if (switch_UI[17].checked) {
+                        led_green_UI[5].classList.add("active_ledgreen");
+                    }
+                    else {
+                        led_green_UI[5].classList.remove("active_ledgreen");
+                    }
+                }
+
             } else {
                 dip_switch[i] = 0;
                 led_red_UI[i].classList.remove('active_ledred');
@@ -756,16 +939,24 @@ function verilog(name_module) {
         //C get output from B
         C.getOutPutfromB(B);
 
-        // toggle class active_led on green led 
-        for (let i = 0; i < ledGreen.length; i++) {
-            led_green_UI[i].classList.toggle('active_ledgreen', C.LED[i] === 1);
+        // toggle class active_led on green led
+        if (name_module !== "BAI5B" && name_module !== "BAI5C" && name_module !== "BAI6C") {
+            for (let i = 0; i < ledGreen.length; i++) {
+                led_green_UI[i].classList.toggle('active_ledgreen', C.LED[i] === 1);
+            }
+        }
+        else {
+            for (let i = 0; i < ledRed.length; i++) {
+                led_red_UI[i].classList.toggle('active_ledred', C.LED[i] === 1);
+            }
         }
     }
 }
 
-// setInterval(() => {
-//     verilog("BAI4C");
-// }, 100);
+setInterval(() => {
+    name_module = "BAI6C";
+    verilog("BAI6C");
+}, 10);
 
 
 

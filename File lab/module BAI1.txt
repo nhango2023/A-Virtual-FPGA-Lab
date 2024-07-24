@@ -4,7 +4,11 @@ input X;
 assign Y = X;
 endmodule
 
-module BAI1test( output wire (0:0) LEDR, input wire (0:0)SW);
+module BAI1_test( 
+output wire (0:0) 
+LEDR,
+input wire (0:0)SW);
 BAI1 DUT(
-.Y(LEDR[0]), .X(SW[0]));
+.Y(LEDR[0]), 
+.X(SW[0]));
 endmodule

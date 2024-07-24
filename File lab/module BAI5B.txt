@@ -8,7 +8,7 @@ always @(posedge clk)
 begin
 if(-rst)
 value <= 4'h0;
-else if (up_down)
+else if (~up_down)
 value <= value + 4'dl;
 else
 value <= value - 4'dl;
@@ -24,5 +24,8 @@ input [0:0] SW);
 assign LEDG [1:0] = KEY [1:0];
 assign LEDG[2] = SW[0];
 BAI5B DUT (
-.Q(LEDR [3:0]), .clk(KEY [1]), .rst (KEY[0]), .up_down (SW[0]));
+.Q(LEDR [3:0]), 
+.clk(KEY [1]), 
+.rst (KEY[0]), 
+.up_down (SW[0]));
 endmodule
