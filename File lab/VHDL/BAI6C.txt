@@ -1,0 +1,141 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity BAI6C is
+    Port ( clk : in STD_LOGIC;
+           rst : in STD_LOGIC;
+           lights : out STD_LOGIC_VECTOR (5 downto 0));
+end BAI6C;
+
+architecture Behavioral of BAI6C is
+    type state_type is (S0, S1, S2, S3, S4, S5);
+    signal state : state_type;
+    signal count : STD_LOGIC_VECTOR (3 downto 0);
+    constant SEC5 : STD_LOGIC_VECTOR (3 downto 0) := "1111";
+    constant SEC1 : STD_LOGIC_VECTOR (3 downto 0) := "0011";
+begin
+    process(clk, rst)
+    begin
+        if rst = '0' then
+            state <= S0;
+            count <= (others => '0');
+        elsif rising_edge(clk) then
+            case state is
+                when S0 =>
+                    if count < SEC5 then
+                        count <= count + 1;
+                    else
+                        state <= S1;
+                        count <= (others => '0');
+                    end if;
+                when S1 =>
+                    if count < SEC1 then
+                        count <= count + 1;
+                    else
+                        state <= S2;
+                        count <= (others => '0');
+                    end if;
+                when S2 =>
+                    if count < SEC1 then
+                        count <= count + 1;
+                    else
+                        state <= S3;
+                        count <= (others => '0');
+                    end if;
+                when S3 =>
+                    if count < SEC5 then
+                        count <= count + 1;
+                    else
+                        state <= S4;
+                        count <= (others => '0');
+                    end if;
+                when S4 =>
+                    if count < SEC1 then
+                        count <= count + 1;
+                    else
+                        state <= S5;
+                        count <= (others => '0');
+                    end if;
+                when S5 =>
+                    if count < SEC1 then
+                        count <= count + 1;
+                    else
+                        state <= S0;
+                        count <= (others => '0');
+                    end if;
+                when others =>
+                    state <= S0;
+            end case;
+        end if;
+    end process;
+
+    process(state)
+    begin
+        case state is
+            when S0 => lights <= "100001";
+            when S1 => lights <= "010001";
+            when S2 => lights <= "001001";
+            when S3 => lights <= "001100";
+            when S4 => lights <= "001010";
+            when S5 => lights <= "001001";
+            when others => lights <= "100001";
+        end case;
+    end process;
+end Behavioral;
+
+entity CLOCK_DIV is
+    Port ( clk : in STD_LOGIC;
+           rst : in STD_LOGIC;
+           clk3 : out STD_LOGIC);
+end CLOCK_DIV;
+
+architecture Behavioral of CLOCK_DIV is
+    signal q : STD_LOGIC_VECTOR (24 downto 0);
+begin
+    process(clk, rst)
+    begin
+        if rst = '0' then
+            q <= (others => '0');
+        elsif rising_edge(clk) then
+            q <= q + 1;
+        end if;
+    end process;
+    clk3 <= q(24);
+end Behavioral;
+
+entity BAI6C_test is
+    Port ( CLOCK_50 : in STD_LOGIC;
+           KEY : in STD_LOGIC_VECTOR (0 downto 0);
+           LEDR : out STD_LOGIC_VECTOR (5 downto 0);
+           LEDG : out STD_LOGIC_VECTOR (0 downto 0));
+end BAI6C_test;
+
+architecture Behavioral of BAI6C_test is
+    component BAI6C
+        Port ( clk : in STD_LOGIC;
+               rst : in STD_LOGIC;
+               lights : out STD_LOGIC_VECTOR (5 downto 0));
+    end component;
+
+    component CLOCK_DIV
+        Port ( clk : in STD_LOGIC;
+               rst : in STD_LOGIC;
+               clk3 : out STD_LOGIC);
+    end component;
+
+    signal clk3 : STD_LOGIC;
+begin
+    LEDG(0) <= KEY(0);
+
+    U1: CLOCK_DIV
+        Port map ( clk => CLOCK_50,
+                   rst => KEY(0),
+                   clk3 => clk3);
+
+    U2: BAI6C
+        Port map ( clk => clk3,
+                   rst => KEY(0),
+                   lights => LEDR);
+end Behavioral;

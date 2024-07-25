@@ -2,13 +2,16 @@ module BAI2A (
 output wire Y,
 input wire A,
 input wire B);
+
 assign Y = A & B;
 endmodule
 
 
 module BAI2A_test(
-output wire [1:0]LEDR, output wire [0:0]LEDG,
+output wire [1:0]LEDR, 
+output wire [0:0]LEDG,
 input wire [1:0]SW);
+
 assign LEDR[1:0] = SW[1:0]
 BAI2A DUT(
 .Y(LEDG[0]),

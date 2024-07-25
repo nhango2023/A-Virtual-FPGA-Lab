@@ -1,0 +1,31 @@
+module BAI5C ( 
+output [3:0] Q,
+input clk,
+input rst);
+
+reg [3:0] value;
+
+always @(posedge clk)
+if (~rst)
+value 4'b0001;
+else
+begin
+value <= value<<1; 
+value [0] <= value [3]; 
+end
+
+assign Q= value;
+endmodule
+
+module BAI5C_test(  
+output [3:0] LEDR,
+output [2:0] LEDG,
+input [1:0] KEY);
+
+assign LEDG[1:0] = KEY[1:0];
+
+BAI5C DUT (
+.Q(LEDR[3:0]), 
+.clk(KEY[1]), 
+.rst(KEY[0]));
+endmodule

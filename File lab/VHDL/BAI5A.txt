@@ -1,0 +1,47 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity BAI5A is
+    Port ( Q : out STD_LOGIC_VECTOR (3 downto 0);
+           clk : in STD_LOGIC;
+           rst : in STD_LOGIC);
+end BAI5A;
+
+architecture Behavioral of BAI5A is
+    signal value : STD_LOGIC_VECTOR (3 downto 0);
+begin
+    process(clk, rst)
+    begin
+        if rst = '0' then
+            value <= "0000";
+        elsif rising_edge(clk) then
+            value <= value + 1;
+        end if;
+    end process;
+
+    Q <= value;
+end Behavioral;
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity BAI5A_test is
+    Port ( LEDR : out STD_LOGIC_VECTOR (3 downto 0);
+           LEDG : out STD_LOGIC_VECTOR (1 downto 0);
+           KEY : in STD_LOGIC_VECTOR (1 downto 0));
+end BAI5A_test;
+
+architecture Behavioral of BAI5A_test is
+begin
+    LEDG <= KEY;
+
+    DUT: entity work.BAI5A
+        port map (
+            Q => LEDR,
+            clk => KEY(1),
+            rst => KEY(0)
+        );
+end Behavioral;

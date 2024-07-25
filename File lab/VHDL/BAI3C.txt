@@ -1,0 +1,60 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity BAI3C is
+    Port (
+        Y : out STD_LOGIC_VECTOR(2 downto 0);
+        X : in STD_LOGIC_VECTOR(7 downto 0);
+        En : in STD_LOGIC
+    );
+end BAI3C;
+
+architecture Behavioral of BAI3C is
+begin
+    process(X, En)
+    begin
+        if En = '1' then
+            case X is
+                when "00000000" => Y <= "ZZZ";
+                when "00000001" => Y <= "000";
+                when "0000001-" => Y <= "001";
+                when "000001--" => Y <= "010";
+                when "00001---" => Y <= "011";
+                when "0001----" => Y <= "100";
+                when "001-----" => Y <= "101";
+                when "01------" => Y <= "110";
+                when "1-------" => Y <= "111";
+                when others => Y <= "ZZZ";
+            end case;
+        else
+            Y <= "ZZZ";
+        end if;
+    end process;
+end Behavioral;
+
+entity BAI3C_test is
+    Port (
+        LEDR : out STD_LOGIC_VECTOR(8 downto 0);
+        LEDG : out STD_LOGIC_VECTOR(2 downto 0);
+        SW : in STD_LOGIC_VECTOR(8 downto 0)
+    );
+end BAI3C_test;
+
+architecture Behavioral of BAI3C_test is
+    component BAI3C
+        Port (
+            Y : out STD_LOGIC_VECTOR(2 downto 0);
+            X : in STD_LOGIC_VECTOR(7 downto 0);
+            En : in STD_LOGIC
+        );
+    end component;
+begin
+    LEDR <= SW;
+
+    DUT: BAI3C
+        Port map (
+            Y => LEDG(2 downto 0),
+            X => SW(7 downto 0),
+            En => SW(8)
+        );
+end Behavioral;

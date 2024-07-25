@@ -1,0 +1,60 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity BAI4A is
+    Port (
+        Q : out STD_LOGIC;
+        Qbar : out STD_LOGIC;
+        D : in STD_LOGIC;
+        clk : in STD_LOGIC;
+        rst : in STD_LOGIC
+    );
+end BAI4A;
+
+architecture Behavioral of BAI4A is
+begin
+    Qbar <= not Q;
+
+    process(clk)
+    begin
+        if rising_edge(clk) then
+            if rst = '0' then
+                Q <= '0';
+            else
+                Q <= D;
+            end if;
+        end if;
+    end process;
+end Behavioral;
+
+entity BAI4A_test is
+    Port (
+        LEDR : out STD_LOGIC_VECTOR(0 downto 0);
+        LEDG : out STD_LOGIC_VECTOR(1 downto 0);
+        SW : in STD_LOGIC_VECTOR(0 downto 0);
+        KEY : in STD_LOGIC_VECTOR(1 downto 0)
+    );
+end BAI4A_test;
+
+architecture Behavioral of BAI4A_test is
+    component BAI4A
+        Port (
+            Q : out STD_LOGIC;
+            Qbar : out STD_LOGIC;
+            D : in STD_LOGIC;
+            clk : in STD_LOGIC;
+            rst : in STD_LOGIC
+        );
+    end component;
+begin
+    LEDR(0) <= SW(0);
+
+    DUT: BAI4A
+        Port map (
+            Q => LEDG(1),
+            Qbar => LEDG(0),
+            D => SW(0),
+            clk => KEY(1),
+            rst => KEY(0)
+        );
+end Behavioral;

@@ -1,0 +1,39 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity BAI1 is
+    Port ( X : in STD_LOGIC;
+           Y : out STD_LOGIC);
+end BAI1;
+
+architecture Behavioral of BAI1 is
+begin
+    Y <= X;
+end Behavioral;
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity BAI1_test is
+    Port ( SW : in STD_LOGIC_VECTOR(0 downto 0);
+           LEDR : out STD_LOGIC_VECTOR(0 downto 0));
+end BAI1_test;
+
+architecture Behavioral of BAI1_test is
+    component BAI1
+        Port ( X : in STD_LOGIC;
+               Y : out STD_LOGIC);
+    end component;
+
+    signal SW0 : STD_LOGIC;
+    signal LEDR0 : STD_LOGIC;
+
+begin
+    SW0 <= SW(0);
+    LEDR(0) <= LEDR0;
+
+    DUT: BAI1
+        Port map ( X => SW0,
+                   Y => LEDR0);
+end Behavioral;
+

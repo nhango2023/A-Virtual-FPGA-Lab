@@ -1,0 +1,49 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity BAI2C is
+    Port (
+        Y : out STD_LOGIC;
+        A : in STD_LOGIC;
+        B : in STD_LOGIC;
+        C : in STD_LOGIC;
+        D : in STD_LOGIC
+    );
+end BAI2C;
+
+architecture Behavioral of BAI2C is
+begin
+    Y <= (A xor B) xor (C xor D);
+end Behavioral;
+
+entity BAI2C_test is
+    Port (
+        LEDR : out STD_LOGIC_VECTOR(3 downto 0);
+        LEDG : out STD_LOGIC_VECTOR(0 downto 0);
+        SW : in STD_LOGIC_VECTOR(3 downto 0)
+    );
+end BAI2C_test;
+
+architecture Behavioral of BAI2C_test is
+    component BAI2C
+        Port (
+            Y : out STD_LOGIC;
+            A : in STD_LOGIC;
+            B : in STD_LOGIC;
+            C : in STD_LOGIC;
+            D : in STD_LOGIC
+        );
+    end component;
+begin
+    LEDR <= SW;
+
+    BAI2C_DUT: BAI2C
+        Port map (
+            Y => LEDG(0),
+            A => SW(0),
+            B => SW(1),
+            C => SW(2),
+            D => SW(3)
+        );
+end Behavioral;
+

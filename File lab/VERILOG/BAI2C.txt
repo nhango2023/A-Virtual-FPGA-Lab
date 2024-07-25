@@ -12,6 +12,7 @@ module BAI2C_test(
 output [0:3] LEDR, 
 output [0:0] LEDG,
 input [0:3] SW);
+
 assign LEDR[0:3] = SW[0:3];
 
 BAI2C_DUT(

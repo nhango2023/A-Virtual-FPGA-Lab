@@ -1,0 +1,63 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity BAI3B is
+    Port (
+        SUM : out STD_LOGIC;
+        CARRY : out STD_LOGIC;
+        A : in STD_LOGIC;
+        B : in STD_LOGIC;
+        C : in STD_LOGIC
+    );
+end BAI3B;
+
+architecture Behavioral of BAI3B is
+    signal HALF_SUM1, HALF_CARRY1, HALF_CARRY2 : STD_LOGIC;
+begin
+    HA1: entity work.BAI3A port map (
+        SUM => HALF_SUM1,
+        CARRY => HALF_CARRY1,
+        A => A,
+        B => B
+    );
+
+    HA2: entity work.BAI3A port map (
+        SUM => SUM,
+        CARRY => HALF_CARRY2,
+        A => HALF_SUM1,
+        B => C
+    );
+
+    CARRY <= HALF_CARRY1 or HALF_CARRY2;
+end Behavioral;
+
+entity BAI3A_test is
+    Port (
+        LEDR : out STD_LOGIC_VECTOR(2 downto 0);
+        LEDG : out STD_LOGIC_VECTOR(1 downto 0);
+        SW : in STD_LOGIC_VECTOR(2 downto 0)
+    );
+end BAI3A_test;
+
+architecture Behavioral of BAI3A_test is
+    component BAI3B
+        Port (
+            SUM : out STD_LOGIC;
+            CARRY : out STD_LOGIC;
+            A : in STD_LOGIC;
+            B : in STD_LOGIC;
+            C : in STD_LOGIC
+        );
+    end component;
+begin
+    LEDR <= SW;
+
+    DUT: BAI3B
+        Port map (
+            SUM => LEDG(0),
+            CARRY => LEDG(1),
+            A => SW(2),
+            B => SW(1),
+            C => SW(0)
+        );
+end Behavioral;

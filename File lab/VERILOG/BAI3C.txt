@@ -2,6 +2,7 @@ module BAI3C(
 output reg [2:0] Y,
 input wire [7:0] X,
 input wire En);
+
 always@(X, En)
 begin
 if (En)
@@ -20,11 +21,11 @@ endcase
 end
 endmodule
 
-
 module BAI3C_test( 
 output [8:0] LEDR, 
 output [2:0] LEDG, 
 input [8:0] SW);
+
 assign LEDR[8:0] = SW[8:0];
 BAI3C DUT (
 .Y(LEDG[2:0]), 

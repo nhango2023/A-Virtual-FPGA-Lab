@@ -5,8 +5,7 @@ assign Y = X;
 endmodule
 
 module BAI1_test( 
-output wire (0:0) 
-LEDR,
+output wire (0:0) LEDR,
 input wire (0:0)SW);
 BAI1 DUT(
 .Y(LEDR[0]), 

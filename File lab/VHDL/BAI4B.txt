@@ -1,0 +1,49 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity BAI4B is
+    Port ( Q : out STD_LOGIC_VECTOR (3 downto 0);
+           D : in STD_LOGIC;
+           clk : in STD_LOGIC;
+           rst : in STD_LOGIC);
+end BAI4B;
+
+architecture Behavioral of BAI4B is
+begin
+    process(clk, rst)
+    begin
+        if rst = '0' then
+            Q <= "0000";
+        elsif rising_edge(clk) then
+            Q <= Q(2 downto 0) & D;
+        end if;
+    end process;
+end Behavioral;
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity BAI4B_test is
+    Port ( LEDR : out STD_LOGIC_VECTOR (0 downto 0);
+           LEDG : out STD_LOGIC_VECTOR (3 downto 0);
+           SW : in STD_LOGIC_VECTOR (0 downto 0);
+           KEY : in STD_LOGIC_VECTOR (1 downto 0));
+end BAI4B_test;
+
+architecture Behavioral of BAI4B_test is
+    signal SW_internal : STD_LOGIC;
+begin
+    LEDR(0) <= SW(0);
+    SW_internal <= SW(0);
+
+    DUT: entity work.BAI4B
+        port map (
+            Q => LEDG,
+            clk => KEY(1),
+            rst => KEY(0),
+            D => SW_internal
+        );
+end Behavioral;

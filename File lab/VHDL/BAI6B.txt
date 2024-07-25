@@ -1,0 +1,89 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity BAI6B is
+    Port ( x : in STD_LOGIC;
+           clk : in STD_LOGIC;
+           rst : in STD_LOGIC;
+           w : out STD_LOGIC);
+end BAI6B;
+
+architecture Behavioral of BAI6B is
+    type state_type is (A, B, C, D);
+    signal p_state, n_state : state_type;
+begin
+    process(x, p_state)
+    begin
+        n_state <= A;
+        case p_state is
+            when A =>
+                if x = '1' then
+                    n_state <= B;
+                else
+                    n_state <= A;
+                end if;
+            when B =>
+                if x = '1' then
+                    n_state <= B;
+                else
+                    n_state <= C;
+                end if;
+            when C =>
+                if x = '1' then
+                    n_state <= D;
+                else
+                    n_state <= A;
+                end if;
+            when D =>
+                if x = '1' then
+                    n_state <= B;
+                else
+                    n_state <= C;
+                end if;
+            when others =>
+                n_state <= A;
+        end case;
+    end process;
+
+    process(x, p_state)
+    begin
+        w <= '0';
+        if p_state = D and x = '1' then
+            w <= '1';
+        end if;
+    end process;
+
+    process(clk)
+    begin
+        if rising_edge(clk) then
+            if rst = '0' then
+                p_state <= A;
+            else
+                p_state <= n_state;
+            end if;
+        end if;
+    end process;
+end Behavioral;
+
+entity BAI6B_test is
+    Port ( LEDG : out STD_LOGIC_VECTOR (0 downto 0);
+           SW : in STD_LOGIC_VECTOR (0 downto 0);
+           KEY : in STD_LOGIC_VECTOR (1 downto 0));
+end BAI6B_test;
+
+architecture Behavioral of BAI6B_test is
+    component BAI6B
+        Port ( x : in STD_LOGIC;
+               clk : in STD_LOGIC;
+               rst : in STD_LOGIC;
+               w : out STD_LOGIC);
+    end component;
+begin
+    DUT: BAI6B
+        Port map ( x => SW(0),
+                   clk => KEY(1),
+                   rst => KEY(0),
+                   w => LEDG(0));
+end Behavioral;

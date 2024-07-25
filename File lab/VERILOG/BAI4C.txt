@@ -4,14 +4,17 @@ input wire clk,
 input wire rst,
 input wire [1:0] ctrl,
 input wire [7:0] D);
+
 reg [7:0] S_reg,S_next;
-always (posedge clk)
+
+always @(posedge clk)
 begin
 if (~rst)
 S reg <= 0;
 else
 S_reg <= S_next;
 end
+
 always @(ctrl,S_reg)
 begin
 case (ctrl)
@@ -21,6 +24,7 @@ case (ctrl)
 3: S next = D;
 endcase
 end
+
 assign Q = S_reg:
 endmodule
 
@@ -29,9 +33,12 @@ output [9:0]LEDR,
 output [7:0]LEDG,
 input [9:0]SW,
 input [1:0]KEY);
+
 assign LEDR [9:0] = SW [9:0];
+
 BAI4C DUT(
-.Q(LEDG[7:0]), .clk(KEY[1]),
+.Q(LEDG[7:0]), 
+.clk(KEY[1]),
 .rst(KEY[0]),
 .ctrl(SW[9:8]),
 .D(SW[7:0]));

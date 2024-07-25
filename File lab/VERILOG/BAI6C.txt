@@ -6,11 +6,12 @@ output reg [5:0] lights);
 reg[2:0] state;
 reg[3:0] count;
 
-parameter S0=3'b000,S1=3'b001,S2=3'b010, // states S3=3'b011,S4=3'b100,S5=3'b101:
+parameter S0=3'b000, S1=3'b001, S2=3'b010, S3=3'b011,
+S4=3'b100, S5=3'b101;
 
-parameter SEC5=4'b1111, SEC1=4'b0011;// delays
+parameter SEC5=4'b1111, SEC1=4'b0011;
+
 always @(posedge clk)
-
 begin
 if (~rst)
 begin
@@ -82,6 +83,7 @@ end
 default state <= S0;
 endcase
 end
+
 always @(*)
 begin
 case (state)
@@ -109,7 +111,7 @@ q <= 0;
 else 
 q<= q + 1;
 end
-assign clk3 = q [24]; // 3 Hz
+assign clk3 = q [24];
 endmodule
 
 
@@ -118,6 +120,7 @@ input wire CLOCK_50,
 input wire [0:0] KEY, 
 output wire [5:0] LEDR, 
 output wire [0:0] LEDG);
+
 wire clk3;
 assign LEDG [0] = KEY[0];
 

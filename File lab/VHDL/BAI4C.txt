@@ -1,0 +1,68 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity BAI4C is
+    Port ( Q : out STD_LOGIC_VECTOR (7 downto 0);
+           clk : in STD_LOGIC;
+           rst : in STD_LOGIC;
+           ctrl : in STD_LOGIC_VECTOR (1 downto 0);
+           D : in STD_LOGIC_VECTOR (7 downto 0));
+end BAI4C;
+
+architecture Behavioral of BAI4C is
+    signal S_reg, S_next : STD_LOGIC_VECTOR (7 downto 0);
+begin
+    process(clk, rst)
+    begin
+        if rst = '0' then
+            S_reg <= (others => '0');
+        elsif rising_edge(clk) then
+            S_reg <= S_next;
+        end if;
+    end process;
+
+    process(ctrl, S_reg)
+    begin
+        case ctrl is
+            when "00" =>
+                S_next <= S_reg;
+            when "01" =>
+                S_next <= D(7) & S_reg(7 downto 1);
+            when "10" =>
+                S_next <= S_reg(6 downto 0) & D(0);
+            when "11" =>
+                S_next <= D;
+            when others =>
+                S_next <= (others => '0');
+        end case;
+    end process;
+
+    Q <= S_reg;
+end Behavioral;
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity BAI4C_test is
+    Port ( LEDR : out STD_LOGIC_VECTOR (9 downto 0);
+           LEDG : out STD_LOGIC_VECTOR (7 downto 0);
+           SW : in STD_LOGIC_VECTOR (9 downto 0);
+           KEY : in STD_LOGIC_VECTOR (1 downto 0));
+end BAI4C_test;
+
+architecture Behavioral of BAI4C_test is
+begin
+    LEDR <= SW;
+
+    DUT: entity work.BAI4C
+        port map (
+            Q => LEDG,
+            clk => KEY(1),
+            rst => KEY(0),
+            ctrl => SW(9 downto 8),
+            D => SW(7 downto 0)
+        );
+end Behavioral;

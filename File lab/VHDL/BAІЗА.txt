@@ -1,0 +1,47 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity BAI3A is
+    Port (
+        SUM : out STD_LOGIC;
+        CARRY : out STD_LOGIC;
+        A : in STD_LOGIC;
+        B : in STD_LOGIC
+    );
+end BAI3A;
+
+architecture Behavioral of BAI3A is
+begin
+    SUM <= A xor B;
+    CARRY <= A and B;
+end Behavioral;
+
+entity BAI3A_test is
+    Port (
+        LEDR : out STD_LOGIC_VECTOR(1 downto 0);
+        LEDG : out STD_LOGIC_VECTOR(1 downto 0);
+        SW : in STD_LOGIC_VECTOR(1 downto 0)
+    );
+end BAI3A_test;
+
+architecture Behavioral of BAI3A_test is
+    component BAI3A
+        Port (
+            SUM : out STD_LOGIC;
+            CARRY : out STD_LOGIC;
+            A : in STD_LOGIC;
+            B : in STD_LOGIC
+        );
+    end component;
+
+begin
+    LEDR <= SW;
+
+    DUT: BAI3A
+        Port map (
+            SUM => LEDG(1),
+            CARRY => LEDG(0),
+            A => SW(0),
+            B => SW(1)
+        );
+end Behavioral;
