@@ -12,7 +12,7 @@ output wire [1:0]LEDR,
 output wire [0:0]LEDG,
 input wire [1:0]SW);
 
-assign LEDR[1:0] = SW[1:0]
+assign LEDR[1:0] = SW[1:0];
 BAI2A DUT(
 .Y(LEDG[0]),
 .A(SW[0]),
