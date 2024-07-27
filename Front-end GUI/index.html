@@ -44,11 +44,14 @@
     <div class="input">
 
       <div class="push-buttons">
-
-        <button class="button" id="button1"></button>
-        <button class="button" id="button2"></button>
-        <button class="button" id="button3"></button>
-        <button class="button" id="button4"></button>
+        <button class="button" id="button1" onclick="onTouch(event, 0)" ontouchstart="onTouch(event, 0)"
+          ontouchend="onTouch(event, 0)" ontouchmove="onTouch(event, 0)"></button>
+        <button class="button" id="button1" ontouchstart="onTouch(event, 1)" ontouchend="onTouch(event, 1)"
+          ontouchmove="onTouch(event, 1)"></button>
+        <button class="button" id="button1" ontouchstart="onTouch(event, 2)" ontouchend="onTouch(event,2)"
+          ontouchmove="onTouch(event, 2)"></button>
+        <button class="button" id="button1" ontouchstart="onTouch(event, 3)" ontouchend="onTouch(event, 3)"
+          ontouchmove="onTouch(event, 3)"></button>
       </div>
 
       <div class="Dip-switches">

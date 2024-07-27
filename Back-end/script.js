@@ -375,11 +375,71 @@ document.addEventListener("keyup", function (event) {
     }
 });
 
+//function touch on mobile
+function onTouch(e, id) {
+    const type = e.type;
+    if (type == "touchstart") {
+        if (id == 0) {
+            push_button[0] = 1;
+            buttons[0].classList.add("active");
+        }
+        else if (id == 1) {
+            push_button[1] = 1;
+            buttons[1].classList.add("active");
+        }
+        else if (id == 2) {
+            push_button[2] = 1;
+            buttons[2].classList.add("active");
+            if (lab_name === "BAI5B" || lab_name === "BAI5C"
+                || lab_name === "BAI5A") {
+                led_green_UI[6].classList.add("active_ledgreen")
+            }
+        }
+        else if (id == 3) {
+            push_button[3] = 1;
+            buttons[3].classList.add("active");
+            if (lab_name === "BAI5B" || lab_name === "BAI5C"
+                || lab_name === "BAI6C" || lab_name === "BAI5A"
+            ) {
+                led_green_UI[7].classList.add("active_ledgreen")
+            }
+        }
+    }
+    else if (type == "touchmove" || type == "touchend") {
+        if (id == 0) {
+            push_button[0] = 0;
+            buttons[0].classList.remove("active");
+        }
+        else if (id == 1) {
+            push_button[1] = 0;
+            buttons[1].classList.remove("active");
+        }
+        else if (id == 2) {
+            push_button[2] = 0;
+            buttons[2].classList.remove("active");
+            if (lab_name === "BAI5B" || lab_name === "BAI5C" || lab_name === "BAI5A") {
+                led_green_UI[6].classList.remove("active_ledgreen")
+            }
+        }
+        else if (id == 3) {
+            push_button[3] = 0;
+            buttons[3].classList.remove("active");
+            if (lab_name === "BAI5B" || lab_name === "BAI5C"
+                || lab_name === "BAI6C" || lab_name === "BAI5A") {
+                led_green_UI[7].classList.remove("active_ledgreen")
+            }
+        }
+    }
+
+}
+
+
+//--------------------------------------------------------------------------------------------//
 //initial switch and green led
 let dip_switch = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 let ledGreen = [0, 0, 0, 0, 0, 0, 0, 0];
 let ledRed = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-//--------------------------------------------------------------------------------------------//
+
 //global variable for BAI4A
 let pre_clk_BAI4A = 0;
 let Q_BAI4A = 0;
