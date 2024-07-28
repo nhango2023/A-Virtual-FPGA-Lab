@@ -76,6 +76,8 @@ const output = document.getElementById('Output');
 
 //Code editor
 const Code = document.getElementById("code");
+// Code.value = `// Code your design here`
+// updateLineCount();
 
 //Set variable for setInterval to computing I/O 
 let Io_computing;
